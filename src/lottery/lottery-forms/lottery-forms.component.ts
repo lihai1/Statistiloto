@@ -4,6 +4,7 @@
 import {Component, Input} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {LotteryApi} from '../../services/lottery.service';
+import {LotteryLucky} from '../../lottery/lottery-lucky/lottery-lucky.component';
 import {userData} from '../../services/user.service'
 import {appTools} from '../../services/appTools.service'
 @Component({
@@ -37,10 +38,10 @@ export class LotteryForms {
     presentActionSheet() {
         var self = this;
         this.appTools.presentActionSheet(this.choices,
-                                                'systematic lottery',
-                                                function(type){
-                                                    self.setFormType(type);
-                                                });
+                                        'systematic lottery',
+                                        function(type){
+                                            self.setFormType(type);
+                                        });
     }
     
 

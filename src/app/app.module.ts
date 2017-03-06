@@ -1,6 +1,8 @@
 import {NgModule, ErrorHandler} from '@angular/core';
 import {HttpModule} from '@angular/http';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+
 import {MyApp} from './app.component';
 import {StatsPage} from '../pages/stats/stats';
 import {userFormsPage} from '../pages/user/numbers';
@@ -12,6 +14,11 @@ import {LotteryForms} from '../lottery/lottery-forms/lottery-forms.component';
 import {LotteryLucky} from '../lottery/lottery-lucky/lottery-lucky.component';
 import { MenuPage } from '../menu/menu.component';
 
+const cloudSettings: CloudSettings = {
+    'core': {
+        'app_id': '634a37b2'
+    }
+};
 
 @NgModule({
     declarations: [
@@ -35,6 +42,7 @@ import { MenuPage } from '../menu/menu.component';
                 }
             }
         }),
+        CloudModule.forRoot(cloudSettings),
         HttpModule
     ],
     bootstrap: [IonicApp],

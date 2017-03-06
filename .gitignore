@@ -33,8 +33,3 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 
-
-# File with Important configs #
-######################
-.io-config.json
-.ionic.config.json
