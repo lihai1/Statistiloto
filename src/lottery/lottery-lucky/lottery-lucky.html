@@ -1,0 +1,12 @@
+<ion-list>
+    <ion-list-header>
+        form type:<span>{{formType}}</span>
+    </ion-list-header>
+
+    <button (click)="presentActionSheet()" ion-button outline>
+        pick your lottery ticket system
+    </button>
+
+    <button (click)="formsChange(event)" ion-button full>Add a Lucky Number!</button>
+    <lottery-list [data]="[willBe]"></lottery-list>
+</ion-list>

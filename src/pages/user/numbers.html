@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle icon-only>
+            <ion-icon name='menu'></ion-icon>
+        </button>
+        <ion-title>
+            My Data
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list>
+        <ion-list-header>
+            forms <span>{{forms?forms.length: 0}}</span>
+        </ion-list-header>
+        <lottery-list [data]="forms"></lottery-list>
+    </ion-list>
+    <ion-list>
+        <ion-list-header>
+            group statistics <span>{{numbers?numbers.length: 0}}</span>
+        </ion-list-header>
+        <lottery-list [data]="numbers"></lottery-list>
+
+    </ion-list>
+
+</ion-content>

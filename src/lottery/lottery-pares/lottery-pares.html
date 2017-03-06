@@ -1,0 +1,20 @@
+<ion-list radio-group>
+    <ion-list-header>
+        group size:<span>{{pares}}</span>
+    </ion-list-header>
+    <!--<ion-row>
+      <ion-col *ngFor="let sys of choices">
+           <ion-item>
+               <ion-label>{{sys}} <span>numbers</span></ion-label>
+               <ion-radio (click)="setParesType(sys)" value="{{sys}}"></ion-radio>
+           </ion-item>
+       </ion-col>
+   </ion-row> -->
+    <button (click)="presentActionSheet()" ion-button outline>
+        pick your lottery ticket system
+    </button>
+    <button (click)="paresChange(event)" ion-button full>calculate stats!</button>
+
+    <lottery-list [data]="paresRes"></lottery-list>
+</ion-list>
+

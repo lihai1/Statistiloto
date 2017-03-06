@@ -1,0 +1,12 @@
+<ion-list radio-group>
+    <ion-list-header>
+        form type:<span>{{formType}}</span>
+    </ion-list-header>
+
+    <button (click)="presentActionSheet()" ion-button outline>
+        pick your lottery ticket system
+    </button>
+
+    <button (click)="formsChange(event)" ion-button full>generate new Form!</button>
+    <lottery-list [data]="formsRes"></lottery-list>
+</ion-list>
