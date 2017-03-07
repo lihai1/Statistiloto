@@ -15,9 +15,9 @@ import {LotteryLucky} from '../lottery/lottery-lucky/lottery-lucky.component';
 import { MenuPage } from '../menu/menu.component';
 
 const cloudSettings: CloudSettings = {
-    'core': {
-        'app_id': '634a37b2'
-    }
+  'core': {
+    'app_id': '634a37b2'
+  }
 };
 
 @NgModule({
