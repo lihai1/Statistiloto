@@ -13,8 +13,8 @@
     <button (click)="presentActionSheet()" ion-button outline>
         pick your lottery ticket system
     </button>
-    <button (click)="paresChange(event)" ion-button full>calculate stats!</button>
+    <button (click)="paresChange(event)" ion-button full>חשב!</button>
 
-    <lottery-list [data]="paresRes"></lottery-list>
+    <lottery-list [data]="paresRes" [recordType]="group"></lottery-list>
 </ion-list>
 

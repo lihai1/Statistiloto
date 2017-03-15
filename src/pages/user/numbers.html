@@ -11,16 +11,23 @@
 <ion-content padding>
     <ion-list>
         <ion-list-header>
-            forms <span>{{forms?forms.length: 0}}</span>
+            <span>טפסים שהגרלתי</span> <span>{{forms?forms.length: 0}}</span>
         </ion-list-header>
         <lottery-list [data]="forms"></lottery-list>
     </ion-list>
-    <ion-list>
-        <ion-list-header>
-            group statistics <span>{{numbers?numbers.length: 0}}</span>
-        </ion-list-header>
-        <lottery-list [data]="numbers"></lottery-list>
+  <ion-list>
+    <ion-list-header>
+      <span>שכיחות של קבוצות מספרים</span> <span>{{numbers?numbers.length: 0}}</span>
+    </ion-list-header>
+    <lottery-list [data]="numbers" [add]="false" ></lottery-list>
 
-    </ion-list>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      <span>מספרי המזל שלי</span> <span>{{lucky?lucky.length: 0}}</span>
+    </ion-list-header>
+    <lottery-list [data]="lucky" [add]="false" ></lottery-list>
+
+  </ion-list>
 
 </ion-content>

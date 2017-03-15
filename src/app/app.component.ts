@@ -37,16 +37,16 @@ export class MyApp {
                 alertCtrl.create({
                   title: 'We have an Update!',
                   subTitle: 'your app is ready to reload with a new update',
-                  buttons: [{text:'OK',handler:()=>{deploy.load();}}]
+                  buttons: [{
+                    text:'OK',
+                    handler:()=> deploy.load()
+                  }]
                 }).present();
             });
           }
+          
         });
       }
-
-
     });
-
-
   }
 }

@@ -1,5 +1,10 @@
 // http://ionicframework.com/docs/v2/theming/
-
+ion-content ion-item{
+  direction:rtl;
+}
+ion-header ~ ion-content{
+  text-align:right;
+}
 
 // App Global Sass
 // --------------------------------------------------

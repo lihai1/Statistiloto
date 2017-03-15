@@ -5,16 +5,16 @@ import {Component, Input} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {LotteryApi} from '../../services/lottery.service';
 import {LotteryLucky} from '../../lottery/lottery-lucky/lottery-lucky.component';
-import {userData} from '../../services/user.service'
+import {userData , numberData} from '../../services/user.service'
 import {appTools} from '../../services/appTools.service'
 @Component({
     selector: 'lottery-forms',
     templateUrl: 'lottery-forms.html',
-    providers: [LotteryApi,appTools]
+    providers: [LotteryApi]
 })
 export class LotteryForms {
     formType:number = 6;
-    formsRes:any;
+    formsRes:numberData[]=[];
     choices:number[] = [6, 7, 8, 9, 10, 11, 12];
     willBe:number[] = [];
     constructor(public navCtrl:NavController,
@@ -38,20 +38,26 @@ export class LotteryForms {
     presentActionSheet() {
         var self = this;
         this.appTools.presentActionSheet(this.choices,
-                                        'systematic lottery',
-                                        function(type){
-                                            self.setFormType(type);
-                                        });
+            'systematic lottery',
+            function(type){
+                self.setFormType(type);
+            });
     }
-    
 
-    generateNewForms(type, howMany) {
-        this.lotteryApi.getNewForms(type, howMany).then(data => {
+
+    generateNewForms(type1, howMany) {
+        this.lotteryApi.getNewForms(type1, howMany).then(data => {
             console.log('generated forms!!');
             console.log(data);
-            this.formsRes = data;
-            this.user.addFormData(data);
+            this.formsRes = this.user.convert(data);
+            //this.formsRes = data;
+           // this.user.addFormData(this.formsRes);
         });
     }
 
 }
+
+
+
+// WEBPACK FOOTER //
+// ./src/lottery/lottery-forms/lottery-forms.component.ts

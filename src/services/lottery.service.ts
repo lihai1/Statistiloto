@@ -3,6 +3,8 @@
  */
 import {Injectable} from '@angular/core'
 import {Http} from '@angular/http'
+//import {userData, numberData} from 'user.service';
+
 import 'rxjs/operator/map'
 import 'rxjs/add/operator/toPromise';
 @Injectable()
@@ -41,3 +43,35 @@ export class LotteryApi {
             });
     }
 }
+
+
+
+
+// WEBPACK FOOTER //
+// ./src/services/lottery.service.ts
+
+
+// WEBPACK FOOTER //
+// ./src/services/lottery.service.ts
+
+
+// WEBPACK FOOTER //
+// ./src/services/lottery.service.ts
+
+
+// WEBPACK FOOTER //
+// ./src/services/lottery.service.ts
+
+
+
+// WEBPACK FOOTER //
+// ./src/services/lottery.service.ts
+
+
+
+// WEBPACK FOOTER //
+// ./src/services/lottery.service.ts
+
+
+// WEBPACK FOOTER //
+// ./src/services/lottery.service.ts

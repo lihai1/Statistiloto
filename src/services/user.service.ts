@@ -11,12 +11,13 @@ export class userData {
         console.log('lottery Api.. initialized!!');
        // this.http=http;
     }
-    private forms:number[][]=[];
-    private numbers:number[][]=[];
-    private build:number[]=[];
+    private forms:numberData[]=[];
+    private numbers:numberData[]=[];
+    private build:numberData[]=[];
 
     private baseUrl:string='https://protected-wildwood-80803.herokuapp.com/myresource/';
     private getAll:string='getAll';
+
     getSavedForms(): Promise<any> {
         return this.http.get(this.baseUrl+this.getAll).toPromise()
             .then(data=>{
@@ -28,29 +29,33 @@ export class userData {
     getSavedNumbers(): Promise<any> {
         return Promise.resolve(this.numbers);
     }
-    getNumbers(): number[][] {
+    getNumbers(): numberData[] {
         return this.numbers;
     }
-    getForms(): number[][] {
+    getForms(): numberData[] {
         return this.forms;
     }
-    addSetData(lucky: number[][]){
-        this.addAData(this.numbers,lucky);
+    addSetData(lucky: numberData[]){
+      var tmp;
+      for(let i = 0;i<lucky.length;i++) {
+        this.numbers.push(tmp = new numberData(lucky[i]));
+        tmp=this.addAData(this.numbers, tmp);
+      }
     }
-    addFormData(lucky: number[][]){
+    addFormData(lucky: numberData[]){
         this.addAData(this.forms,lucky);
     }
-    addToBuild(nums: number[]){
-        for(var i=0;i<nums.length;i++)
-            this.build.push(nums[i]);
+    addToBuild(nums: numberData[]){
+      this.addAData(this.build,nums);
     }
-    getBuild(){
+    getBuild(): numberData[]{
         return this.build;
     }
     initBuild(){
         this.build = [];
     }
-    private addAData(origin:number[][],lucky: number[][]){
+    private addAData(origin:numberData[],lucky: numberData[]){
+     // debugger;
         if(!origin.length){
             for(var i=0;i<lucky.length;i++)
                 origin.push(lucky[i]);
@@ -59,15 +64,15 @@ export class userData {
         var bad =false;
         for(var i=0;i<lucky.length;i++){
             var j=0;
-            if(lucky[i].length==origin[j].length){
+            if(lucky[i].numbers.length==origin[j].numbers.length){
                 for(j=0;j<origin.length;j++){
                     var k=0;
-                    for(k=0;k<origin[j].length;k++){
-                        if(lucky[i][k]!=origin[j][k]){
+                    for(k=0;k<origin[j].numbers.length;k++){
+                        if(lucky[i].numbers[k]!=origin[j][k]){
                             break;
                         }
                     }
-                    if(k==origin[j].length){
+                    if(k==origin[j].numbers.length){
                         bad = true;
                     }
                 }
@@ -81,4 +86,64 @@ export class userData {
             else bad = false;
         }
     }
+
+
+  convert(data : number[][]): numberData[]{
+    var result =[];
+
+    for(var i=0;i<data.length && i < 15;i++)
+      result.push(new numberData(data[i]));
+    return result;
+  }
 }
+var count_deb = 0;
+
+export class numberData {
+  public numbers:number[]=[];
+  from:Date;
+  to:Date;
+  reqeustDate:Date;
+  constructor(data : any){
+    count_deb++;
+    try {
+      if (typeof data == 'object') {
+        if (data.to != undefined) this.to = new Date(data.to);
+        if (data.to != undefined) this.from = new Date(data.from);
+        if (data.reqeustDate != undefined) this.from = new Date(data.reqeustDate);
+        else this.reqeustDate = new Date();
+        this.numbers = data;
+      }
+      if(  count_deb > 100)
+        debugger;
+      console.log('numberData.. initialized!!');
+      // this.http=http;
+    }
+    catch(e){
+      console.log(e);
+    }
+  }
+
+}
+
+
+
+// WEBPACK FOOTER //
+// ./src/services/user.service.ts
+
+
+// WEBPACK FOOTER //
+// ./src/services/user.service.ts
+
+
+// WEBPACK FOOTER //
+// ./src/services/user.service.ts
+
+
+
+// WEBPACK FOOTER //
+// ./src/services/user.service.ts
+
+
+
+// WEBPACK FOOTER //
+// ./src/services/user.service.ts

@@ -5,18 +5,18 @@ import {Component} from '@angular/core';
 
 import {NavController , ActionSheetController} from 'ionic-angular';
 import {LotteryApi} from '../../services/lottery.service';
-import {userData} from '../../services/user.service';
+import {userData , numberData} from '../../services/user.service';
 import {appTools} from '../../services/appTools.service';
 
 @Component({
     selector: 'lottery-pares',
     templateUrl: 'lottery-pares.html',
-    providers: [LotteryApi,appTools]
+    providers: [LotteryApi]
 })
 export class LotteryPares {
     pares:number = 1;
     choices:number[] = [1, 2, 3, 4, 5, 6];
-    paresRes:number[];
+    paresRes:numberData[]=[];
 
     constructor(public navCtrl:NavController,
                 private lotteryApi:LotteryApi,
@@ -44,14 +44,40 @@ export class LotteryPares {
             });
     }
 
-    calcStatistics(type, howMany) {
-        this.lotteryApi.getNewPares(type, howMany).then(data => {
+    calcStatistics(type_, howMany) {
+        this.lotteryApi.getNewPares(type_, howMany).then(data => {
             console.log('calculated stats!!');
             console.log(data);
-            this.paresRes = data;
-            this.user.addSetData(data);
-
+            this.paresRes = this.user.convert(data);
+            //debugger;
+            
+           // this.user.addSetData(data);
         });
     }
 
 }
+
+
+
+// WEBPACK FOOTER //
+// ./src/lottery/lottery-pares/lottery-pares.component.ts
+
+
+// WEBPACK FOOTER //
+// ./src/lottery/lottery-pares/lottery-pares.component.ts
+
+
+// WEBPACK FOOTER //
+// ./src/lottery/lottery-pares/lottery-pares.component.ts
+
+
+// WEBPACK FOOTER //
+// ./src/lottery/lottery-pares/lottery-pares.component.ts
+
+
+// WEBPACK FOOTER //
+// ./src/lottery/lottery-pares/lottery-pares.component.ts
+
+
+// WEBPACK FOOTER //
+// ./src/lottery/lottery-pares/lottery-pares.component.ts

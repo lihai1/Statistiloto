@@ -1,12 +1,12 @@
 <ion-list radio-group>
     <ion-list-header>
-        form type:<span>{{formType}}</span>
+        <span>טופס לוטו שיטטתי</span><span>{{formType==6?"רגיל":formType}}</span>
     </ion-list-header>
 
     <button (click)="presentActionSheet()" ion-button outline>
-        pick your lottery ticket system
+        בחר את השיטה!
     </button>
 
-    <button (click)="formsChange(event)" ion-button full>generate new Form!</button>
-    <lottery-list [data]="formsRes"></lottery-list>
+    <button (click)="formsChange(event)" ion-button full>הגרל טופס שמעולם לא זכה!</button>
+    <lottery-list [data]="formsRes" [recordType]="form"></lottery-list>
 </ion-list>

@@ -3,4 +3,18 @@ lottery-lucky{
     position: absolute;
     z-index: 999;
   }
+
+
+
+  ion-grid {
+    display: flex;
+    flex-wrap: wrap; // Items will wrap on to new lines when there isn't enough room
+
+    -webkit-flex-flow: row wrap !important;
+    justify-content: flex-start !important;
+    ion-item {
+      width: 50px !important;
+      display:inline-block !important;
+    }
+  }
 }
