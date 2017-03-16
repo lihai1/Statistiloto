@@ -122,7 +122,9 @@ export class numberData {
       console.log(e);
     }
   }
-
+  isEmpty(): boolean{
+    return this.numbers.length ==0;
+  }
 }
 
 

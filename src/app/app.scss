@@ -1,11 +1,13 @@
 // http://ionicframework.com/docs/v2/theming/
-ion-content ion-item{
-  direction:rtl;
-}
 ion-header ~ ion-content{
   text-align:right;
 }
-
+ion-title{
+  text-align: center;
+}
+lottery-forms ion-badge , lottery-lucky ion-badge , lottery-pares ion-badge{
+ // min-width: 23px !important;
+}
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These

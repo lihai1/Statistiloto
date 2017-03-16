@@ -17,11 +17,11 @@ export class LotteryApi {
     baseUrl:string='http://localhost:8080/generate/';
     generate:string='form';
     calcStat:string='pares';
-    getNewForms(type:number,howMany:number): Promise<any> {
+    getNewForms(type:number,howMany:number,willBe:number[]): Promise<any> {
         return this.http.post(this.baseUrl+this.generate,{
             //from:new Date().toISOString(), todo
            // to:new Date().toISOString(), todo
-           // willBe:[25,11], todo
+            willBe:willBe != undefined?willBe:[],
             howMany:5,
             type:type,
             strong:0}).toPromise()

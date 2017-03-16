@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { HomePage } from '../home/home';
 import { StatsPage } from '../stats/stats';
-import { userFormsPage } from '../user/numbers';
+import { LuckPage } from '../luck/luck';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -12,7 +12,7 @@ export class TabsPage {
   // should be each tab's root Page
   tab1Root: any = HomePage;
   tab2Root: any = StatsPage;
-  tab3Root: any = userFormsPage;
+  tab3Root: any = LuckPage;
 
   constructor() {
 

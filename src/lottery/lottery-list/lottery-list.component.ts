@@ -2,6 +2,7 @@
  * Created by LihaiMac on 2/28/17.
  */
 import {Component, Input} from '@angular/core';
+import {appTools} from '../../services/appTools.service'
 
 import {ToastController , ItemSliding} from 'ionic-angular';
 import {userData , numberData} from '../../services/user.service';
@@ -11,7 +12,7 @@ import {userData , numberData} from '../../services/user.service';
     template: `
         <ion-item-sliding *ngFor="let item of data" #slidingItem>
           <ion-item>
-          <ion-badge *ngFor="let num of item.numbers; let i=index;" item-right>{{num}}</ion-badge>
+          <ion-badge class="ball" *ngFor="let num of item.numbers; let i=index;" item-right>{{num}}</ion-badge>
          <!--   <span class="ball" >{{num}}</span>-->
           </ion-item>
           <ion-item-options side="right" *ngIf="add">
@@ -34,13 +35,14 @@ export class LotteryList {
   @Input() recordType:string;
   @Input() add:boolean = true;
 
-  constructor( private user:userData, public toastCtrl:ToastController) {
+  constructor( private user:userData, public toastCtrl:ToastController,private app:appTools) {
     this.toastCtrl = toastCtrl;
     this.user = user;
+    this.app = app;
   }
 
   addToService(item:numberData,slidingItem:ItemSliding) { //todo
-    this.showToast("bottom",'הטופס נוסף למספרי המזל');
+    this.app.showToast("bottom",'הטופס נוסף למספרי המזל');
     if(this.recordType =='form')
       this.user.addToBuild([item]);
     else if(this.recordType == 'group')
@@ -55,21 +57,7 @@ export class LotteryList {
     slidingItem.close();
     this.data.splice(index,1);
   }
-  showToast(position:string,msg:string) {
-    var options={
-      message: msg,
-      duration: 2000,
-      position: position,
-      showCloseButton:true,
-      closeButtonText:"סגור",
 
-    };
-    if(position == 'bottom'){
-      options["cssClass"] = "above-tabs";
-    }
-    let toast = this.toastCtrl.create(options);
-    toast.present(toast);
-  }
 }
 
 

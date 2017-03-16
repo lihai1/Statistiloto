@@ -10,10 +10,10 @@
            </ion-item>
        </ion-col>
    </ion-row> -->
-    <button (click)="presentActionSheet()" ion-button outline>
+    <button (click)="presentActionSheet()" ion-button outline full>
         pick your lottery ticket system
     </button>
-    <button (click)="paresChange(event)" ion-button full>חשב!</button>
+    <button (click)="paresChange(event)" ion-button full>!חשב</button>
 
     <lottery-list [data]="paresRes" [recordType]="group"></lottery-list>
 </ion-list>

@@ -21,23 +21,11 @@ export class StatsPage {
 
   constructor(public navCtrl:NavController, private lotteryApi:LotteryApi,private user:userData) {
     this.user = user;
-    this.generateNewForms(8, 5);
     this.calcStatistics(2, 5);
   }
 
   paresChange(event){
     this.calcStatistics(this.pares, 5);
-  }
-  formsChange(event){
-    this.generateNewForms(this.formType, 5);
-  }
-
-  generateNewForms(type, howMany) {
-    this.lotteryApi.getNewForms(type, howMany).then(data => {
-      console.log('generated forms!!');
-      console.log(data);
-      this.formsRes = data;
-    });
   }
 
   calcStatistics(type, howMany) {
@@ -45,7 +33,6 @@ export class StatsPage {
       console.log('calculated stats!!');
       console.log(data);
       this.paresRes = data;
-      this.user.addSetData(data);
     });
   }
 
