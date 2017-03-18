@@ -14,12 +14,12 @@ export class userFormsPage {
   constructor(user:userData) {
     this.user = user;
 
-    user.getSavedForms().then(data =>{
+   /* user.getSavedForms().then(data =>{
       this.forms=data;
     });
     user.getSavedNumbers().then(data =>{
       this.forms=data;
-    });
+    });*/
     this.lucky=user.getBuild();
     this.forms = user.getForms();
     this.numbers = user.getNumbers();

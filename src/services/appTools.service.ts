@@ -64,17 +64,23 @@ export class appTools {
       actionSheet.present();
     });
   }
-
-  showToast(position:string,msg:string) {
+  showToasMessage(msg:string){
+    this.showToast('',msg);
+  }
+  showToast(options_?:any,msg?:string) {
     var options={
       message: msg,
-      duration: 2000,
-      position: position,
+      duration: 3000,
+      position: 'top',
       showCloseButton:true,
       closeButtonText:"סגור",
-
     };
-    if(position == 'bottom'){
+    if(typeof options_ == 'object'){
+      for(var key in options_){
+        options[key]=options_[key];
+      }
+    }
+    if(options.position == 'bottom'){
       options["cssClass"] = "above-tabs";
     }
     let toast = this.toastCtrl.create(options);

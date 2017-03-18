@@ -36,11 +36,11 @@ export class userData {
         return this.forms;
     }
     addSetData(lucky: numberData[]){
-      var tmp;
-      for(let i = 0;i<lucky.length;i++) {
-        this.numbers.push(tmp = new numberData(lucky[i]));
-        tmp=this.addAData(this.numbers, tmp);
-      }
+     // var tmp;
+     // for(let i = 0;i<lucky.length;i++) {
+      //  this.numbers.push(tmp = new numberData(lucky[i]));
+        this.addAData(this.numbers, lucky);
+     // }
     }
     addFormData(lucky: numberData[]){
         this.addAData(this.forms,lucky);
@@ -76,9 +76,6 @@ export class userData {
                         bad = true;
                     }
                 }
-                //if(lucky[i][j]!=origin[i][j]){
-                //    break;
-                //}
             }
             if(!bad){
                 origin.push(lucky[i]);

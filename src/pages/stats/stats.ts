@@ -7,7 +7,6 @@ import {userData} from '../../services/user.service';
 @Component({
   selector: 'page-stats',
   templateUrl: 'stats.html',
-  providers: [LotteryApi],
   // directives: [LotteryList]
 })
 export class StatsPage {
@@ -21,7 +20,7 @@ export class StatsPage {
 
   constructor(public navCtrl:NavController, private lotteryApi:LotteryApi,private user:userData) {
     this.user = user;
-    this.calcStatistics(2, 5);
+   // this.calcStatistics(2, 5);
   }
 
   paresChange(event){

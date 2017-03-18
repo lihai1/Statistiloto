@@ -12,8 +12,8 @@ import {userData , numberData} from '../../services/user.service';
     template: `
         <ion-item-sliding *ngFor="let item of data" #slidingItem>
           <ion-item>
-          <ion-badge class="ball" *ngFor="let num of item.numbers; let i=index;" item-right>{{num}}</ion-badge>
-         <!--   <span class="ball" >{{num}}</span>-->
+         <!-- <ion-badge class="ball" *ngFor="let num of item.numbers; let i=index;" item-right>{{num}}</ion-badge>
+          -->  <span class="ball" *ngFor="let num of item.numbers; let i=index;">{{num}}</span>
           </ion-item>
           <ion-item-options side="right" *ngIf="add">
             <button ion-button (click)="addToService(item,slidingItem)" color="positive" icon-left>
@@ -32,7 +32,7 @@ import {userData , numberData} from '../../services/user.service';
 })
 export class LotteryList {
   @Input() data:numberData[];
-  @Input() recordType:string;
+  @Input('recordType') recordType:string;
   @Input() add:boolean = true;
 
   constructor( private user:userData, public toastCtrl:ToastController,private app:appTools) {
@@ -44,10 +44,8 @@ export class LotteryList {
   addToService(item:numberData,slidingItem:ItemSliding) { //todo
     this.app.showToast("bottom",'הטופס נוסף למספרי המזל');
     if(this.recordType =='form')
-      this.user.addToBuild([item]);
+      this.user.addFormData([item]);
     else if(this.recordType == 'group')
-      this.user.addSetData([item]);
-    if(this.recordType == 'group')
       this.user.addSetData([item]);
     if(this.recordType == 'lucky')
       this.user.addToBuild([item]);

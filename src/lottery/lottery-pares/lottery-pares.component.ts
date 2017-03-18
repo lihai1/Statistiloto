@@ -11,7 +11,6 @@ import {appTools} from '../../services/appTools.service';
 @Component({
     selector: 'lottery-pares',
     templateUrl: 'lottery-pares.html',
-    providers: [LotteryApi]
 })
 export class LotteryPares {
     pares:number = 1;
@@ -22,7 +21,7 @@ export class LotteryPares {
                 private lotteryApi:LotteryApi,
                 private user:userData,
                 private appTools:appTools) {
-        this.calcStatistics(this.pares, 5);
+       // this.calcStatistics(this.pares, 5);
         this.user = user;
         this.appTools = appTools;
     }
@@ -50,7 +49,7 @@ export class LotteryPares {
             console.log(data);
             this.paresRes = this.user.convert(data);
             //debugger;
-            
+
            // this.user.addSetData(data);
         });
     }

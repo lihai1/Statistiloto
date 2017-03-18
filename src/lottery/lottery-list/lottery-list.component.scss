@@ -1,3 +1,13 @@
+lottery-list{
+  ion-label{
+    white-space: initial;
+    line-height: 22px;
+  }
+
+}
+.above-tabs > .toast-wrapper.toast-bottom {
+    bottom: 7vh;
+}
 span.ball {
   background-color: red;
   border-radius: 50%;
@@ -5,7 +15,4 @@ span.ball {
   height: 20px;
   display: inline-flex;
   margin-right: 5px;
-}
-.above-tabs > .toast-wrapper.toast-bottom {
-    bottom: 7vh;
 }

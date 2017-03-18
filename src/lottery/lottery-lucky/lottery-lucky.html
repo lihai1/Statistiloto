@@ -3,18 +3,18 @@
     <span>מספרי המזל:</span>
     <span *ngIf="willBe.length==0">0</span>
       <span *ngIf="willBe.length>0">
-        <ion-grid>
+        <ion-grid class="lucky-grid">
           <ion-item *ngFor="let ball of willBe; let i=index;">
-            <button (click)="removeNumber(i)">{{ball}}</button>
+            <span class="ball" (click)="removeNumber(i)">{{ball}}</span>
           </ion-item>
 
         </ion-grid>
       </span>
   </ion-list-header>
 
-  <ion-grid>
+  <ion-grid class="lucky-grid">
     <ion-item *ngFor="let ball of choices">
-      <button (click)="addNumber(ball)">{{ball}}</button>
+      <span class="ball" (click)="addNumber(ball)">{{ball}}</span>
     </ion-item>
   </ion-grid>
 

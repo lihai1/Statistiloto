@@ -8,7 +8,6 @@ import {appTools} from '../../services/appTools.service'
 @Component({
   selector: 'lottery-forms',
   templateUrl: 'lottery-forms.html',
-  providers: [LotteryApi]
 })
 export class LotteryForms {
   formType:number = 6;
@@ -19,7 +18,7 @@ export class LotteryForms {
   constructor(private lotteryApi:LotteryApi,
               private user:userData,
               private appTools:appTools) {
-    this.generateNewForms(this.formType, 5);
+   // this.generateNewForms(this.formType, 5);
     this.user = user;
     this.appTools = appTools;
   }

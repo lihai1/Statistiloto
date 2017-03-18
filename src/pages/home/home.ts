@@ -7,7 +7,6 @@ import {LotteryApi} from '../../services/lottery.service';
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html',
-    providers: [LotteryApi],
    // directives: [LotteryList]
 })
 export class HomePage {

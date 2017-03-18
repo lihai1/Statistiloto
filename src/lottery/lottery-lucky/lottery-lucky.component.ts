@@ -1,7 +1,7 @@
 /**
  * Created by LihaiMac on 2/28/17.
  */
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {userData} from '../../services/user.service'
 import {appTools} from '../../services/appTools.service'
 @Component({
@@ -34,8 +34,8 @@ export class LotteryLucky {
           position: "bottom",
           showCloseButton:true,
           closeButtonText:"סגור",
-
         };
+      this.appTools.showToast(options);
     }
     this.willBe.push(n);
     this.choices.splice(this.choices.indexOf(n),1);
@@ -49,8 +49,8 @@ export class LotteryLucky {
   }
 
   removeNumber(i:number) {
+    this.choices.push(this.willBe[i]);
     this.willBe.splice(i, 1);
-    this.choices.push(i);
     this.choices.sort((a,b)=>a-b);
 
     // this.formsChange(null);

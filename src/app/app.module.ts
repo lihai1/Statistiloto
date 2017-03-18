@@ -14,6 +14,9 @@ import {LotteryPares} from '../lottery/lottery-pares/lottery-pares.component';
 import {LotteryForms} from '../lottery/lottery-forms/lottery-forms.component';
 import {LotteryLucky} from '../lottery/lottery-lucky/lottery-lucky.component';
 import {appTools} from '../services/appTools.service'
+import {RegisterPage} from '../pages/regiser-form/regiser-form';
+import { AuthService } from '../services/auth.service';
+
 
 import {MenuPage} from '../menu/menu.component';
 
@@ -35,6 +38,7 @@ const cloudSettings:CloudSettings = {
     LotteryPares,
     LotteryForms,
     LotteryLucky,
+    RegisterPage,
     MenuPage
   ],
   imports: [
@@ -57,9 +61,10 @@ const cloudSettings:CloudSettings = {
     userFormsPage,
     HomePage,
     TabsPage,
-    MenuPage
+    MenuPage,
+    RegisterPage
   ],
-  providers: [appTools, {provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [appTools,AuthService, {provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {
 }
