@@ -1,12 +1,13 @@
 /**
  * Created by LihaiMac on 3/5/17.
  */
-import {Component} from '@angular/core';
+import {Component, ElementRef, Renderer} from '@angular/core';
 import {MenuController} from 'ionic-angular';
 import {TabsPage} from '../pages/tabs/tabs'
 import {userFormsPage} from '../pages/user/numbers'
 import {RegisterPage} from '../pages/regiser-form/regiser-form'
 import {LotteryApi} from '../services/lottery.service';
+import {AppTools} from '../services/appTools.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class MenuPage{
   pages:any[] = [{page:userFormsPage,text:'הנתונים שלי'},
     {page:TabsPage,text:'סטטיסטיקה'},
     {page:RegisterPage,text:'הרשמה'}];
-    
+
   private rootPage;
   start:string;
   end:string;
@@ -36,12 +37,23 @@ export class MenuPage{
   public get endDate() :string{
     return this.end;
   }
-  
-  constructor(public menuCtrl:MenuController, public lottery:LotteryApi) {
+  side:string;
+  constructor(public app:AppTools,public menuCtrl:MenuController, public lottery:LotteryApi,public el: ElementRef, public renderer: Renderer) {
     menuCtrl.enable(true);
     this.rootPage = userFormsPage;
-    this.startDate = new Date('2-12-2004').toISOString();
+    var tmp:Date=new Date();
+    // for safari dates
+    tmp.setDate(12);
+    tmp.setMonth(1);
+    tmp.setFullYear(2004);
+    this.startDate = tmp.toISOString();
     this.endDate = new Date().toISOString();
+    if(app.language == 'heb'){
+      this.side = 'right';
+      renderer.setElementStyle(el.nativeElement, 'direction', 'rtl');
+    }
+    else
+      this.side = 'left';
   }
   setPage(page) {
     this.rootPage = page;
@@ -98,6 +110,39 @@ export class MenuPage{
 
 // WEBPACK FOOTER //
 // ./src/menu/menu.component.ts
+
+
+// WEBPACK FOOTER //
+// ./src/menu/menu.component.ts
+
+
+// WEBPACK FOOTER //
+// ./src/menu/menu.component.ts
+
+
+// WEBPACK FOOTER //
+// ./src/menu/menu.component.ts
+
+
+// WEBPACK FOOTER //
+// ./src/menu/menu.component.ts
+
+
+// WEBPACK FOOTER //
+// ./src/menu/menu.component.ts
+
+
+// WEBPACK FOOTER //
+// ./src/menu/menu.component.ts
+
+
+// WEBPACK FOOTER //
+// ./src/menu/menu.component.ts
+
+
+// WEBPACK FOOTER //
+// ./src/menu/menu.component.ts
+
 
 
 // WEBPACK FOOTER //

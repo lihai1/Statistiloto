@@ -1,20 +1,40 @@
 <ion-list radio-group>
+  <ion-list-header>
+    <span>גודל קבוצה:</span><span>{{pares}}</span>
+  </ion-list-header>
+  <!--<ion-row>
+    <ion-col *ngFor="let sys of choices">
+         <ion-item>
+             <ion-label>{{sys}} <span>numbers</span></ion-label>
+             <ion-radio (click)="setParesType(sys)" value="{{sys}}"></ion-radio>
+         </ion-item>
+     </ion-col>
+ </ion-row> -->
+  <button (click)="presentActionSheet()" ion-button outline full>
+    בחר את גודל הקבוצה לחישוב שכיחות
+  </button>
+  <ion-item>
+    <ion-label> Sam</ion-label>
+    <ion-toggle disabled checked="false"></ion-toggle>
+  </ion-item>
+  <ion-list radio-group>
     <ion-list-header>
-        group size:<span>{{pares}}</span>
+      שכיחות
     </ion-list-header>
-    <!--<ion-row>
-      <ion-col *ngFor="let sys of choices">
-           <ion-item>
-               <ion-label>{{sys}} <span>numbers</span></ion-label>
-               <ion-radio (click)="setParesType(sys)" value="{{sys}}"></ion-radio>
-           </ion-item>
-       </ion-col>
-   </ion-row> -->
-    <button (click)="presentActionSheet()" ion-button outline full>
-        pick your lottery ticket system
-    </button>
-    <button (click)="paresChange(event)" ion-button full>!חשב</button>
 
-    <lottery-list [data]="paresRes" [recordType]="'group'"></lottery-list>
+    <ion-item>
+      <span>
+        <ion-label>חזק</ion-label>
+        <ion-radio checked="true" value="strong"></ion-radio>
+      </span>
+      <span>
+        <ion-label>חלש</ion-label>
+        <ion-radio value="weak"></ion-radio>
+      </span>
+    </ion-item>
+  </ion-list>
+  <button (click)="paresChange(event)" ion-button full>!חשב</button>
+
+  <lottery-list [data]="paresRes" [recordType]="'group'"></lottery-list>
 </ion-list>
 

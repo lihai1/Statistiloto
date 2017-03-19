@@ -1,19 +1,19 @@
 /**
  * Created by LihaiMac on 2/28/17.
  */
-import {Component, Input} from '@angular/core';
-import {appTools} from '../../services/appTools.service'
+import {Component, Input,ElementRef} from '@angular/core';
+import {AppTools} from '../../services/appTools.service'
 
 import {ToastController , ItemSliding} from 'ionic-angular';
 import {userData , numberData} from '../../services/user.service';
 
 @Component({
     selector: 'lottery-list',
-    template: `
+    template: `<div [class.last-ball]="recordType=='group'">
         <ion-item-sliding *ngFor="let item of data" #slidingItem>
           <ion-item>
          <!-- <ion-badge class="ball" *ngFor="let num of item.numbers; let i=index;" item-right>{{num}}</ion-badge>
-          -->  <span class="ball" *ngFor="let num of item.numbers; let i=index;">{{num}}</span>
+          -->  <span class="ball" *ngFor="let num of item.numbers; let i=index;" ><span>{{num}}</span></span>
           </ion-item>
           <ion-item-options side="right" *ngIf="add">
             <button ion-button (click)="addToService(item,slidingItem)" color="positive" icon-left>
@@ -28,17 +28,18 @@ import {userData , numberData} from '../../services/user.service';
             </button>
           </ion-item-options>
         </ion-item-sliding>
-        `
+        </div>`
 })
 export class LotteryList {
   @Input() data:numberData[];
   @Input('recordType') recordType:string;
   @Input() add:boolean = true;
 
-  constructor( private user:userData, public toastCtrl:ToastController,private app:appTools) {
+  constructor(myElement: ElementRef,private user:userData, public toastCtrl:ToastController,private app:AppTools) {
     this.toastCtrl = toastCtrl;
     this.user = user;
     this.app = app;
+    //debugger;
   }
 
   addToService(item:numberData,slidingItem:ItemSliding) { //todo

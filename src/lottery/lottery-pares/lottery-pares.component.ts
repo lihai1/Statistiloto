@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
 import {NavController , ActionSheetController} from 'ionic-angular';
 import {LotteryApi} from '../../services/lottery.service';
 import {userData , numberData} from '../../services/user.service';
-import {appTools} from '../../services/appTools.service';
+import {AppTools} from '../../services/appTools.service';
 
 @Component({
     selector: 'lottery-pares',
@@ -20,7 +20,7 @@ export class LotteryPares {
     constructor(public navCtrl:NavController,
                 private lotteryApi:LotteryApi,
                 private user:userData,
-                private appTools:appTools) {
+                private appTools:AppTools) {
        // this.calcStatistics(this.pares, 5);
         this.user = user;
         this.appTools = appTools;
@@ -37,7 +37,7 @@ export class LotteryPares {
     presentActionSheet() {
         var self = this;
         this.appTools.presentActionSheet(this.choices,
-            'systematic lottery',
+            'גודל הקבוצה',
             function(type){
                 self.setParesType(type);
             });

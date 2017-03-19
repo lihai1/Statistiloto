@@ -3,7 +3,7 @@
  */
 import {Component} from '@angular/core';
 import {userData} from '../../services/user.service'
-import {appTools} from '../../services/appTools.service'
+import {AppTools} from '../../services/appTools.service'
 @Component({
   selector: 'lottery-lucky',
   templateUrl: 'lottery-lucky.html',
@@ -13,7 +13,7 @@ export class LotteryLucky {
   private choices:number[];
 
   constructor(private user:userData,
-              private appTools:appTools) {
+              private appTools:AppTools) {
     this.user = user;
     this.appTools = appTools;
     this.initChoices();

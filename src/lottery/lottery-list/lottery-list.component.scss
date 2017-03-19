@@ -11,8 +11,15 @@ lottery-list{
 span.ball {
   background-color: red;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   display: inline-flex;
   margin-right: 5px;
+}
+span.ball > span{
+  text-align: center;
+  width: 100%;
+}
+.last-ball span.ball:last-child{
+  background-color: #0d81ff;
 }

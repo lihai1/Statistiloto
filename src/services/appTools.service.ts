@@ -6,10 +6,10 @@ import {ActionSheetController, ToastController} from 'ionic-angular';
 import {Injectable} from '@angular/core'
 
 @Injectable()
-export class appTools {
+export class AppTools {
   constructor(private actionSheet:ActionSheetController,private toastCtrl:ToastController) {
   }
-
+  language:string = 'heb';
   setButtonsJson(arr:any[], itemText:string, callback:Function):any[] {
     let buttons = [];
     let pre = itemText ? itemText : '';

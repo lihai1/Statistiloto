@@ -4,7 +4,7 @@
 import {Component} from '@angular/core';
 import {LotteryApi} from '../../services/lottery.service';
 import {userData, numberData} from '../../services/user.service'
-import {appTools} from '../../services/appTools.service'
+import {AppTools} from '../../services/appTools.service'
 @Component({
   selector: 'lottery-forms',
   templateUrl: 'lottery-forms.html',
@@ -17,7 +17,7 @@ export class LotteryForms {
 
   constructor(private lotteryApi:LotteryApi,
               private user:userData,
-              private appTools:appTools) {
+              private appTools:AppTools) {
    // this.generateNewForms(this.formType, 5);
     this.user = user;
     this.appTools = appTools;

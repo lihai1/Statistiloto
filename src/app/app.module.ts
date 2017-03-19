@@ -13,7 +13,7 @@ import {LotteryList} from '../lottery/lottery-list/lottery-list.component';
 import {LotteryPares} from '../lottery/lottery-pares/lottery-pares.component';
 import {LotteryForms} from '../lottery/lottery-forms/lottery-forms.component';
 import {LotteryLucky} from '../lottery/lottery-lucky/lottery-lucky.component';
-import {appTools} from '../services/appTools.service'
+import {AppTools} from '../services/appTools.service'
 import {RegisterPage} from '../pages/regiser-form/regiser-form';
 import { AuthService } from '../services/auth.service';
 
@@ -64,7 +64,7 @@ const cloudSettings:CloudSettings = {
     MenuPage,
     RegisterPage
   ],
-  providers: [appTools,AuthService, {provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [AppTools,AuthService, {provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {
 }

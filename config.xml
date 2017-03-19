@@ -7,6 +7,7 @@
   <access origin="*"/>
   <allow-navigation href="http://ionic.local/*"/>
   <allow-navigation href="http://192.168.1.38:8100"/>
+  <allow-navigation href="http://192.168.1.20:8100"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="tel:*"/>
@@ -39,4 +40,3 @@
   <plugin name="cordova-plugin-splashscreen" spec="~4.0.1"/>
   <plugin name="ionic-plugin-deploy" spec="~0.6.5"/>
 </widget>
-

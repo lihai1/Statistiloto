@@ -3,7 +3,6 @@ import { Platform ,AlertController} from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import {Deploy} from '@ionic/cloud-angular';
 
-
 //import { TabsPage } from '../pages/tabs/tabs';
 import {MenuPage} from '../menu/menu.component.ts';
 import {userData} from '../services/user.service.ts'
@@ -15,7 +14,7 @@ import {LotteryApi} from '../services/lottery.service.ts'
 })
 export class MyApp {
     rootPage = MenuPage;
-
+    right:boolean;
   constructor(platform: Platform, private deploy: Deploy,private alertCtrl:AlertController) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -28,23 +27,23 @@ export class MyApp {
         console.log("I'm a regular browser!");
         deploy.channel = 'dev';
         deploy.check().then((snapshotAvailable: boolean) => {
-          alert('checked! '+snapshotAvailable);
+          //alert('checked! '+snapshotAvailable);
           if (snapshotAvailable) {
             // When snapshotAvailable is true, you can apply the snapshot
             deploy.download().then(() => {
               return deploy.extract();
             }).then(()=>{
                 alertCtrl.create({
-                  title: 'We have an Update!',
-                  subTitle: 'your app is ready to reload with a new update',
+                  title: 'יש לנו עדכון!',
+                  subTitle: 'האפליקציה עודכנה, אשר לטעינה מחדש',//'your app is ready to reload with a new update',
                   buttons: [{
-                    text:'OK',
+                    text:'אשר',
                     handler:()=> deploy.load()
                   }]
                 }).present();
             });
           }
-          
+
         });
       }
     });
