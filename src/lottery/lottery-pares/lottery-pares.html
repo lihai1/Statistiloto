@@ -13,24 +13,19 @@
   <button (click)="presentActionSheet()" ion-button outline full>
     בחר את גודל הקבוצה לחישוב שכיחות
   </button>
-  <ion-item>
-    <ion-label> Sam</ion-label>
-    <ion-toggle disabled checked="false"></ion-toggle>
-  </ion-item>
-  <ion-list radio-group>
+
+  <ion-list radio-group [(ngModel)]="strong">
     <ion-list-header>
       שכיחות
     </ion-list-header>
 
     <ion-item>
-      <span>
         <ion-label>חזק</ion-label>
         <ion-radio checked="true" value="strong"></ion-radio>
-      </span>
-      <span>
+    </ion-item>
+    <ion-item>
         <ion-label>חלש</ion-label>
         <ion-radio value="weak"></ion-radio>
-      </span>
     </ion-item>
   </ion-list>
   <button (click)="paresChange(event)" ion-button full>!חשב</button>

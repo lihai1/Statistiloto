@@ -3,59 +3,59 @@
  */
 import {Component} from '@angular/core';
 
-import {NavController , ActionSheetController} from 'ionic-angular';
+import {NavController} from 'ionic-angular';
 import {LotteryApi} from '../../services/lottery.service';
-import {userData , numberData} from '../../services/user.service';
+import {userData, numberData} from '../../services/user.service';
 import {AppTools} from '../../services/appTools.service';
 
 @Component({
-    selector: 'lottery-pares',
-    templateUrl: 'lottery-pares.html',
+  selector: 'lottery-pares',
+  templateUrl: 'lottery-pares.html',
 })
 export class LotteryPares {
-    pares:number = 1;
-    choices:number[] = [1, 2, 3, 4, 5, 6];
-    paresRes:numberData[]=[];
+  pares:number = 1;
+  choices:number[] = [1, 2, 3, 4, 5, 6];
+  paresRes:numberData[] = [];
+  strong:string;
 
-    constructor(public navCtrl:NavController,
-                private lotteryApi:LotteryApi,
-                private user:userData,
-                private appTools:AppTools) {
-       // this.calcStatistics(this.pares, 5);
-        this.user = user;
-        this.appTools = appTools;
-    }
+  constructor(public navCtrl:NavController,
+              private lotteryApi:LotteryApi,
+              private user:userData,
+              private appTools:AppTools) {
+    // this.calcStatistics(this.pares, 5);
+    this.user = user;
+    this.appTools = appTools;
+  }
 
-    private setParesType(howMany) {
-        this.pares = howMany;
-    }
+  private setParesType(howMany) {
+    this.pares = howMany;
+  }
 
-    paresChange(event) {
-        this.calcStatistics(this.pares, 5);
-    }
+  paresChange(event) {
+    this.calcStatistics(this.pares, 5);
+  }
 
-    presentActionSheet() {
-        var self = this;
-        this.appTools.presentActionSheet(this.choices,
-            'גודל הקבוצה',
-            function(type){
-                self.setParesType(type);
-            });
-    }
+  presentActionSheet() {
+    var self = this;
+    this.appTools.presentActionSheet(this.choices,
+      'גודל הקבוצה',
+      function (type) {
+        self.setParesType(type);
+      });
+  }
 
-    calcStatistics(type_, howMany) {
-        this.lotteryApi.getNewPares(type_, howMany).then(data => {
-            console.log('calculated stats!!');
-            console.log(data);
-            this.paresRes = this.user.convert(data);
-            //debugger;
+  calcStatistics(type_, howMany) {
+    this.lotteryApi.getNewPares(type_, howMany, this.strong).then(data => {
+      console.log('calculated stats!!');
+      console.log(data);
+      this.paresRes = this.user.convert(data);
+      //debugger;
 
-           // this.user.addSetData(data);
-        });
-    }
+      // this.user.addSetData(data);
+    });
+  }
 
 }
-
 
 
 // WEBPACK FOOTER //

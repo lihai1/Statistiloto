@@ -29,7 +29,7 @@ export class LotteryApi {
   setEndDate(date:Date){
     this.endDate=date;
   }
-  getNewForms(type_:number, howMany:number, willBe:number[]):Promise<any> {
+  getNewForms(type_:number, howMany:number, willBe:number[],strong?:string):Promise<any> {
     return this.http.post(this.baseUrl + this.generate, {
       //from:new Date().toISOString(), todo
       // to:new Date().toISOString(), todo
@@ -38,7 +38,7 @@ export class LotteryApi {
       type: type_,
       from:this.startDate,
       to:this.endDate,
-      strong: 0
+      strong: (strong==undefined || strong == 'strong')?0:1
     }).toPromise()
       .then(data=> {
         return data.json();
@@ -47,11 +47,11 @@ export class LotteryApi {
       });
   }
 
-  getNewPares(type:number, howMany:number):Promise<any> {
+  getNewPares(type:number, howMany:number,strong?:string):Promise<any> {
     return this.http.post(this.baseUrl + this.calcStat, {
       howMany: howMany,
       type: type,
-      strong: 0
+      strong: (strong==undefined || strong == 'strong')?0:1
     }).toPromise()
       .then(data=> {
         return data.json();
