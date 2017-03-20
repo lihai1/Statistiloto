@@ -42,7 +42,7 @@ export class LotteryForms {
   }
 
   generateNewForms(type1, howMany) {
-    var x:numberData[] = this.user.getBuild();
+    var x:numberData[] = this.user.getAllNumbers();
     //var willBe:number[] = [];
     var promise:Promise<number[]>;
     if (x.length > 0) {

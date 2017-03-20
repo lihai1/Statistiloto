@@ -92,6 +92,17 @@ export class userData {
       result.push(new numberData(data[i]));
     return result;
   }
+
+  getAllNumbers() {
+    var res:numberData[] = this.build.concat([]);
+    var tmp;
+    for(var i=0;i<this.numbers.length;i++) {
+      tmp = this.numbers[i].numbers.concat([]);
+      tmp.pop();
+      res=res.concat(new numberData(tmp));
+    }
+    return res;
+  }
 }
 var count_deb = 0;
 
