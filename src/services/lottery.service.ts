@@ -15,9 +15,9 @@ export class LotteryApi {
     // this.http=http;
   }
 
-  baseUrl:string='https://protected-wildwood-80803.herokuapp.com/myresource/';
+  //baseUrl:string='https://protected-wildwood-80803.herokuapp.com/myresource/';
   //baseUrl:string = 'http://localhost:8080/generate/';
-  //baseUrl:string='https://statistiloto1.herokuapp.com/generate/';
+  baseUrl:string='https://statistiloto1.herokuapp.com/generate/';
   generate:string = 'form';
   calcStat:string = 'pares';
   analyze:string = 'analyze';
