@@ -16,10 +16,11 @@ export class LotteryApi {
   }
 
   //baseUrl:string='https://protected-wildwood-80803.herokuapp.com/myresource/';
-  //baseUrl:string = 'http://localhost:8080/generate/';
-  baseUrl:string='https://statistiloto1.herokuapp.com/generate/';
+  baseUrl:string = 'http://localhost:8080/generate/';
+  //baseUrl:string='https://statistiloto1.herokuapp.com/generate/';
   generate:string = 'form';
   calcStat:string = 'pares';
+  analyze:string = 'analyze';
 
   startDate:Date;
   endDate:Date;
@@ -51,9 +52,26 @@ export class LotteryApi {
     return this.http.post(this.baseUrl + this.calcStat, {
       howMany: howMany,
       type: type,
+      from:this.startDate,
+      to:this.endDate,
       strong: (strong==undefined || strong == 'strong')?0:1
     }).toPromise()
       .then(data=> {
+        return data.json();
+      }).catch(err=> {
+        return Promise.resolve([[1, 2, 3, 4], [5, 6, 7]]);
+      });
+  }
+
+
+  getAnalyze(form:number[]):Promise<any> {
+    return this.http.post(this.baseUrl + this.analyze, {
+      from:this.startDate,
+      to:this.endDate,
+      form: form
+    }).toPromise()
+      .then(data=> {
+        debugger;
         return data.json();
       }).catch(err=> {
         return Promise.resolve([[1, 2, 3, 4], [5, 6, 7]]);

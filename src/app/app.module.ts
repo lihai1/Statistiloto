@@ -19,6 +19,8 @@ import { AuthService } from '../services/auth.service';
 
 
 import {MenuPage} from '../menu/menu.component';
+import {AnalyzedFormPage} from "../pages/analyzed-form/analyzed-form";
+import {LotteryApi} from "../services/lottery.service";
 
 const cloudSettings:CloudSettings = {
   'core': {
@@ -39,6 +41,7 @@ const cloudSettings:CloudSettings = {
     LotteryForms,
     LotteryLucky,
     RegisterPage,
+    AnalyzedFormPage,
     MenuPage
   ],
   imports: [
@@ -62,9 +65,10 @@ const cloudSettings:CloudSettings = {
     HomePage,
     TabsPage,
     MenuPage,
-    RegisterPage
+    RegisterPage,
+    AnalyzedFormPage
   ],
-  providers: [AppTools,AuthService, {provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [AppTools,AuthService,LotteryApi, {provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {
 }

@@ -110,7 +110,7 @@ export class numberData {
         else this.reqeustDate = new Date();
         this.numbers = data;
       }
-      if(  count_deb > 100)
+      if(  count_deb > 1000)
         debugger;
       console.log('numberData.. initialized!!');
       // this.http=http;
@@ -132,6 +132,11 @@ export class numberData {
 
 // WEBPACK FOOTER //
 // ./src/services/user.service.ts
+
+
+// WEBPACK FOOTER //
+// ./src/services/user.service.ts
+
 
 
 // WEBPACK FOOTER //

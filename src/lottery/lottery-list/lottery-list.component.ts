@@ -4,26 +4,31 @@
 import {Component, Input,ElementRef} from '@angular/core';
 import {AppTools} from '../../services/appTools.service'
 
-import {ToastController , ItemSliding} from 'ionic-angular';
+import {ToastController, ItemSliding, ModalController} from 'ionic-angular';
 import {userData , numberData} from '../../services/user.service';
+import {AnalyzedFormPage} from "../../pages/analyzed-form/analyzed-form";
 
 @Component({
     selector: 'lottery-list',
-    template: `<div [class.last-ball]="recordType=='group'">
+    template: `<div [class.last-ball]="true||recordType=='group'">
         <ion-item-sliding *ngFor="let item of data" #slidingItem>
           <ion-item>
          <!-- <ion-badge class="ball" *ngFor="let num of item.numbers; let i=index;" item-right>{{num}}</ion-badge>
           -->  <span class="ball" *ngFor="let num of item.numbers; let i=index;" ><span>{{num}}</span></span>
           </ion-item>
-          <ion-item-options side="right" *ngIf="add">
+          <ion-item-options side="right" *ngIf="add&&!disabled">
             <button ion-button (click)="addToService(item,slidingItem)" color="positive" icon-left>
               <ion-icon name="add-circle"></ion-icon>
               הוסף
             </button>
+            <button ion-button (click)="analyzeModal(item,slidingItem)" color="secondary" icon-left>
+              <ion-icon name="calculator"></ion-icon>
+              נתח
+            </button>
           </ion-item-options>
-          <ion-item-options side="left" >
+          <ion-item-options side="left" *ngIf="!disabled">
             <button ion-button color="danger" (click)="removeItem(i,slidingItem)" icon-left>
-              <ion-icon name="add-circle"></ion-icon>
+              <ion-icon name="trash"></ion-icon>
               מחק
             </button>
           </ion-item-options>
@@ -34,8 +39,13 @@ export class LotteryList {
   @Input() data:numberData[];
   @Input('recordType') recordType:string;
   @Input() add:boolean = true;
+  @Input() disabled:boolean = false;
 
-  constructor(myElement: ElementRef,private user:userData, public toastCtrl:ToastController,private app:AppTools) {
+  constructor(myElement: ElementRef,
+              private modalCtrl:ModalController,
+              private user:userData,
+              public toastCtrl:ToastController,
+              private app:AppTools) {
     this.toastCtrl = toastCtrl;
     this.user = user;
     this.app = app;
@@ -57,6 +67,11 @@ export class LotteryList {
     this.data.splice(index,1);
   }
 
+  analyzeModal(item:numberData,slidingItem:ItemSliding) {
+    slidingItem.close();
+    let modal = this.modalCtrl.create(AnalyzedFormPage,{form:item});
+    modal.present();
+  }
 }
 
 

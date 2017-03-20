@@ -10,7 +10,7 @@ import {LotteryApi} from '../services/lottery.service.ts'
 
 @Component({
     templateUrl: 'app.html',
-    providers: [userData, LotteryApi]
+    providers: [userData]
 })
 export class MyApp {
     rootPage = MenuPage;
