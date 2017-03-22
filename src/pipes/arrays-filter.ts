@@ -1,5 +1,6 @@
 import {Injectable, Pipe} from '@angular/core';
 import {numberData} from "../services/user.service";
+import {AppTools} from "../services/appTools.service";
 
 /*
  Generated class for the ArraysFilter pipe.
@@ -8,13 +9,16 @@ import {numberData} from "../services/user.service";
  Angular 2 Pipes.
  */
 @Pipe({
-  name: 'arrays-filter'
+  name: 'arrays-filter',
 })
 @Injectable()
 export class ArraysFilter {
   /*
    Takes a value and makes it lowercase.
    */
+  constructor(public app:AppTools){
+    this.app = app;
+  }
   transform(values:number[][], maxSplit) {
     var archiveSize : number = values.splice(0, 1)[0][0];
     var res:AnalyzedData[]=[];
@@ -22,7 +26,8 @@ export class ArraysFilter {
     var prevSize = 2;
     for (var i = 0; i < values.length; i++) {
       if (values[i].length != prevSize) {
-        res.push(new AnalyzedData(values.splice(0, i),archiveSize));
+        let combos = this.app.sumCombinations(values[i].length -1,37);
+        res.push(new AnalyzedData(values.splice(0, i),archiveSize,combos));
         i=0;
       }
       prevSize = values.length>0?values[i].length:0;
@@ -35,7 +40,7 @@ export class AnalyzedData {
   count:number;
   numbers:numberData[] = [];
   title: string = "";
-  constructor(numbers:number[][],archiveSize:number) {
+  constructor(numbers:number[][],archiveSize:number,combos:number) {
     numbers.forEach(item => this.numbers.push(new numberData(item)));
     this.archiveSize = archiveSize;
     this.count=0;
@@ -45,7 +50,8 @@ export class AnalyzedData {
     for(var i=0;i<numbers.length;i++){
       this.count+=numbers[i][numbers[i].length-1];
     }
-    this.title += this.count/37;
+    var tmp = (this.count/combos)+'';
+    this.title += tmp.substring(0,tmp.indexOf('.')+4);
   }
 }
 

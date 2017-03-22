@@ -12,6 +12,7 @@ lottery-lucky{
     -webkit-flex-flow: row wrap !important;
     justify-content: flex-start !important;
     ion-item {
+      padding-left:0 !important;
       width: 50px !important;
       display:inline-block !important;
       ion-label{

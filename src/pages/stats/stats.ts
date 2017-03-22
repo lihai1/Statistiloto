@@ -1,13 +1,12 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 
 import {NavController} from 'ionic-angular';
-import {LotteryApi} from '../../services/lottery.service';
 import {userData} from '../../services/user.service';
+import {LotteryApi} from "../../services/lottery.service";
 
 @Component({
   selector: 'page-stats',
   templateUrl: 'stats.html',
-  // directives: [LotteryList]
 })
 export class StatsPage {
   formType:number = 6;
@@ -15,7 +14,6 @@ export class StatsPage {
   paresRes:any;
   formsRes:any;
   systems:number[]=[6,7,8,9,10,11,12];
-  //@Input() choices:string[];
 
 
   constructor(public navCtrl:NavController, private lotteryApi:LotteryApi,private user:userData) {

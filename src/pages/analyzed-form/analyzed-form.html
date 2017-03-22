@@ -6,10 +6,24 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>ניתוח המספרים</ion-title>
-    <lottery-list [data]="[form]" [disabled]="true" ></lottery-list>
+
+
+
+    <ion-toolbar>
+      <ion-buttons start>
+        <button ion-button color="danger" (click)="closePage()" icon-left>
+          סגור
+        </button>
+      </ion-buttons>
+      <ion-title>ניתוח המספרים</ion-title>
+
+    </ion-toolbar>
+
+
 
   </ion-navbar>
+  <lottery-list [data]="[form]" [disabled]="true" ></lottery-list>
+
 </ion-header>
 
 <ion-content padding>
@@ -18,9 +32,8 @@
         {{item.title}}
     </ion-list-header>
     <div *ngIf="open(item)">
-    <lottery-list [data]="item.numbers" [disabled]="true" ></lottery-list>
+    <lottery-list [data]="item.numbers" [recordType]="'group'" ></lottery-list>
   </div>
   </ion-list>
   <button (click)="closePage()" ion-button full>סגור</button>
-
 </ion-content>

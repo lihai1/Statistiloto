@@ -86,5 +86,13 @@ export class AppTools {
     let toast = this.toastCtrl.create(options);
     toast.present(toast);
   }
-
+  sumCombinations(k:number,n:number):number{
+    return this.factorial(n)/this.factorial(n-k)*this.factorial(k);
+  }
+  private factorialMem:any = {};
+  private factorial(n){
+    if(this.factorialMem[n])
+      return this.factorialMem[n];
+    return this.factorialMem[n] = n==1?1:n*this.factorial(n-1);
+  }
 }

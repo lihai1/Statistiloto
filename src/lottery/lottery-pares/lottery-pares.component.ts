@@ -3,7 +3,7 @@
  */
 import {Component} from '@angular/core';
 
-import {NavController} from 'ionic-angular';
+import {NavController, LoadingController} from 'ionic-angular';
 import {LotteryApi} from '../../services/lottery.service';
 import {userData, numberData} from '../../services/user.service';
 import {AppTools} from '../../services/appTools.service';
@@ -16,9 +16,10 @@ export class LotteryPares {
   pares:number = 1;
   choices:number[] = [1, 2, 3, 4, 5, 6];
   paresRes:numberData[] = [];
-  strong:string;
+  strong:string = 'strong';
 
-  constructor(public navCtrl:NavController,
+  constructor(private loadingCtrl: LoadingController,
+              public navCtrl:NavController,
               private lotteryApi:LotteryApi,
               private user:userData,
               private appTools:AppTools) {
@@ -44,13 +45,24 @@ export class LotteryPares {
       });
   }
 
+  private presentLoading() {
+    let loader = this.loadingCtrl.create({
+      content: "מחשב",
+      duration: 3000
+    });
+    loader.present();
+    return loader;
+  }
   calcStatistics(type_, howMany) {
+    var loader = this.presentLoading();
+
     this.lotteryApi.getNewPares(type_, howMany, this.strong).then(data => {
+      loader.dismiss();
       console.log('calculated stats!!');
       console.log(data);
       this.paresRes = this.user.convert(data);
       //debugger;
-
+      
       // this.user.addSetData(data);
     });
   }

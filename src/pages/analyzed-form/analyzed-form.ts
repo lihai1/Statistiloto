@@ -12,7 +12,7 @@ import {userData, numberData} from "../../services/user.service";
 @Component({
   selector: 'page-analyzed-form',
   templateUrl: 'analyzed-form.html',
-  providers: [ArraysFilter, userData]
+  providers: [ArraysFilter]
 })
 export class AnalyzedFormPage {
   @Input() form:numberData;

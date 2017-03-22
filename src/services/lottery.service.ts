@@ -3,21 +3,21 @@
  */
 import {Injectable} from '@angular/core'
 import {Http} from '@angular/http'
-//import {userData, numberData} from 'user.service';
 
 import 'rxjs/operator/map'
 import 'rxjs/add/operator/toPromise';
+import {AlertController} from "ionic-angular/index";
 @Injectable()
 export class LotteryApi {
 
-  constructor(private http:Http) {
+  constructor(private http:Http,private alertCtrl:AlertController) {
     console.log('lottery Api.. initialized!!');
     // this.http=http;
   }
 
   //baseUrl:string='https://protected-wildwood-80803.herokuapp.com/myresource/';
-  //baseUrl:string = 'http://localhost:8080/generate/';
-  baseUrl:string='https://statistiloto1.herokuapp.com/generate/';
+  baseUrl:string = 'http://localhost:8080/generate/';
+  //baseUrl:string='https://statistiloto1.herokuapp.com/generate/';
   generate:string = 'form';
   calcStat:string = 'pares';
   analyze:string = 'analyze';
@@ -44,7 +44,8 @@ export class LotteryApi {
       .then(data=> {
         return data.json();
       }).catch(err=> {
-        return Promise.resolve([[1, 2, 3, 4], [5, 6, 7]]);
+        this.badAlert();
+        return Promise.resolve([]);
       });
   }
 
@@ -59,7 +60,8 @@ export class LotteryApi {
       .then(data=> {
         return data.json();
       }).catch(err=> {
-        return Promise.resolve([[1, 2, 3, 4], [5, 6, 7]]);
+        this.badAlert();
+        return Promise.resolve([]);
       });
   }
 
@@ -71,11 +73,21 @@ export class LotteryApi {
       form: form
     }).toPromise()
       .then(data=> {
-        debugger;
         return data.json();
       }).catch(err=> {
-        return Promise.resolve([[1, 2, 3, 4], [5, 6, 7]]);
+        this.badAlert();
+        return Promise.resolve([]);
       });
+
+  }
+
+  private badAlert() {
+    this.alertCtrl.create({
+      title: 'שגיאה',
+      subTitle: 'בעית חיבור לאינטרנט, אנא נסה שוב',//'your app is ready to reload with a new update',
+      buttons: [{
+        text:'אשר'}]
+    }).present();
   }
 }
 
@@ -119,6 +131,11 @@ export class LotteryApi {
 
 // WEBPACK FOOTER //
 // ./src/services/lottery.service.ts
+
+
+// WEBPACK FOOTER //
+// ./src/services/lottery.service.ts
+
 
 
 // WEBPACK FOOTER //

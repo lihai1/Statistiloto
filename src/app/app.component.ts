@@ -5,12 +5,8 @@ import {Deploy} from '@ionic/cloud-angular';
 
 //import { TabsPage } from '../pages/tabs/tabs';
 import {MenuPage} from '../menu/menu.component.ts';
-import {userData} from '../services/user.service.ts'
-import {LotteryApi} from '../services/lottery.service.ts'
-
 @Component({
     templateUrl: 'app.html',
-    providers: [userData]
 })
 export class MyApp {
     rootPage = MenuPage;

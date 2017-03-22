@@ -10,31 +10,7 @@ import {AnalyzedFormPage} from "../../pages/analyzed-form/analyzed-form";
 
 @Component({
   selector: 'lottery-list',
-  template: `<div [class.last-ball]="true||recordType=='group'">
-        <ion-item-sliding *ngFor="let item of data" #slidingItem>
-          <ion-item>
-         <!-- <ion-badge class="ball" *ngFor="let num of item.numbers; let i=index;" item-right>{{num}}</ion-badge>
-          -->  <span class="ball" *ngFor="let num of item.numbers; let i=index;" ><span>{{num}}</span></span>
-          </ion-item>
-          <ion-item-options side="right" *ngIf="add&&!disabled">
-            <button ion-button (click)="analyzeModal(item,slidingItem)" color="secondary" icon-left>
-              <ion-icon name="calculator"></ion-icon>
-              נתח
-            </button>
-            <button ion-button (click)="addToService(item,slidingItem)" color="positive" icon-left>
-              <ion-icon name="add-circle"></ion-icon>
-              הוסף
-            </button>
-            
-          </ion-item-options>
-          <ion-item-options side="left" *ngIf="!disabled">
-            <button ion-button color="danger" (click)="removeItem(i,slidingItem)" icon-left>
-              <ion-icon name="trash"></ion-icon>
-              מחק
-            </button>
-          </ion-item-options>
-        </ion-item-sliding>
-        </div>`
+  templateUrl: 'lottery-list.html'
 })
 export class LotteryList {
   @Input() data:numberData[];

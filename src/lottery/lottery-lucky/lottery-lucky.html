@@ -5,7 +5,7 @@
       <span *ngIf="willBe.length>0">
         <ion-grid class="lucky-grid">
           <ion-item *ngFor="let ball of willBe; let i=index;">
-            <span class="ball" (click)="removeNumber(i)">{{ball}}</span>
+            <span class="ball" (click)="removeNumber(i)"><span>{{ball}}</span></span>
           </ion-item>
 
         </ion-grid>
@@ -14,7 +14,7 @@
 
   <ion-grid class="lucky-grid">
     <ion-item *ngFor="let ball of choices">
-      <span class="ball" (click)="addNumber(ball)">{{ball}}</span>
+      <span class="ball" (click)="addNumber(ball)"><span>{{ball}}</span></span>
     </ion-item>
   </ion-grid>
 
