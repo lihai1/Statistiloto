@@ -7,11 +7,11 @@
         </button>
         <ion-item>
           <ion-label>התחלת ארכיון</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="startDate"></ion-datetime>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="startDate" min="{{minDate}}" max="{{endDate}}"></ion-datetime>
         </ion-item>
         <ion-item>
           <ion-label>סוף ארכיון</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="endDate" (change)="changeT($event)"></ion-datetime>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="endDate" (change)="changeT($event)" min="{{startDate}}" max="{{maxDate}}"></ion-datetime>
         </ion-item>
       </ion-list>
     </ion-content>

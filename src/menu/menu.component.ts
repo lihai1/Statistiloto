@@ -24,6 +24,7 @@ export class MenuPage{
   start:string;
   end:string;
   minDate:string;
+  maxDate:string;
   public set startDate(d: string) {
     this.start=d;
     this.lottery.setStartDate(new Date(d));
@@ -47,8 +48,9 @@ export class MenuPage{
     tmp.setDate(12);
     tmp.setMonth(1);
     tmp.setFullYear(2004);
-    this.minDate = '2004-1-12';
+    this.minDate = tmp.toISOString();
     this.startDate = tmp.toISOString();
+    this.maxDate = new Date().toISOString();
     this.endDate = new Date().toISOString();
     if(app.language == 'heb'){
       this.side = 'right';
