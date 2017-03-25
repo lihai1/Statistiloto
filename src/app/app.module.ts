@@ -2,6 +2,8 @@ import {NgModule, ErrorHandler} from '@angular/core';
 import {HttpModule} from '@angular/http';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {CloudSettings, CloudModule} from '@ionic/cloud-angular';
+//import { IonicStorageModule } from '@ionic/storage';
+
 
 import {MyApp} from './app.component';
 import {StatsPage} from '../pages/stats/stats';
@@ -22,6 +24,7 @@ import {MenuPage} from '../menu/menu.component';
 import {AnalyzedFormPage} from "../pages/analyzed-form/analyzed-form";
 import {LotteryApi} from "../services/lottery.service";
 import {userData} from "../services/user.service";
+import {NativeStorage} from "@ionic-native/native-storage";
 
 const cloudSettings:CloudSettings = {
   'core': {
@@ -55,6 +58,7 @@ const cloudSettings:CloudSettings = {
       }
     }),
     CloudModule.forRoot(cloudSettings),
+   // IonicStorageModule.forRoot(),
     HttpModule
   ],
   bootstrap: [IonicApp],
@@ -69,7 +73,13 @@ const cloudSettings:CloudSettings = {
     RegisterPage,
     AnalyzedFormPage
   ],
-  providers: [AppTools,userData,AuthService,LotteryApi, {provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [
+    NativeStorage,
+    AppTools,
+    userData,
+    AuthService,
+    LotteryApi,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {
 }

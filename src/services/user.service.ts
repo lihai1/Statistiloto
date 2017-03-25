@@ -5,90 +5,155 @@ import {Injectable} from '@angular/core'
 import {Http} from '@angular/http'
 import 'rxjs/operator/map'
 import 'rxjs/add/operator/toPromise';
+import { NativeStorage } from '@ionic-native/native-storage';
+import {Platform} from "ionic-angular/index";
+
 @Injectable()
 export class userData {
-    constructor(private http: Http){
-        console.log('lottery Api.. initialized!!');
-       // this.http=http;
-    }
-    private forms:numberData[]=[];
-    private numbers:numberData[]=[];
-    private build:numberData[]=[];
+  constructor(private platform:Platform,private http:Http, private nativeStorage:NativeStorage/*, private storage:Storage*/) {
+    this.getFromStorage();
+    /*storage.ready().then(() => {
 
-    private baseUrl:string='https://protected-wildwood-80803.herokuapp.com/myresource/';
-    private getAll:string='getAll';
+     // set a key/value
+     // this.storage.set('name', 'Max');
 
-    getSavedForms(): Promise<any> {
-        return this.http.get(this.baseUrl+this.getAll).toPromise()
-            .then(data=>{
-                return data.json();
-            }).catch(err=>{
-                return Promise.resolve(this.forms);
-            });
+     // Or to get a key/value pair
+     storage.get('lucky').then((val) => {
+     debugger;
+     this.build = val;
+     });
+     storage.get('forms').then((val) => {
+     this.forms = val;
+     });
+     storage.get('group').then((val) => {
+     this.numbers = val;
+     });
+     });*/
+    console.log('userData.. initialized!!');
+    // this.http=http;
+  }
+  /*
+   private addToStorage(type:string,record:numberData){
+   this.storage.get('type').then(data=>{
+   if(data){
+   this.storage.set(type,data.push(record));
+   }
+   });
+   }*/
+  private getFromStorage() {
+    this.platform.ready().then(() => {
+
+      this.nativeStorage.getItem('group')
+        .then(
+          data => this.numbers = data,
+          error => console.log('group' + error)
+        );
+      this.nativeStorage.getItem('lucky')
+        .then(
+          data => this.build = data,
+          error => console.log('lucky' + error)
+        );
+      this.nativeStorage.getItem('forms')
+        .then(
+          data => this.forms = data,
+          error => console.log('forms' + error)
+        );
+    });
+  }
+  private saveItem(type:string,data:numberData[]){
+    this.nativeStorage.setItem(type, JSON.stringify(data));
+  }
+  private forms:numberData[] = [];
+  private numbers:numberData[] = [];
+  private build:numberData[] = [];
+
+  private baseUrl:string = 'https://protected-wildwood-80803.herokuapp.com/myresource/';
+  private getAll:string = 'getAll';
+
+  getSavedForms():Promise<any> {
+    return this.http.get(this.baseUrl + this.getAll).toPromise()
+      .then(data=> {
+        return data.json();
+      }).catch(err=> {
+        return Promise.resolve(this.forms);
+      });
+  }
+
+  getSavedNumbers():Promise<any> {
+    return Promise.resolve(this.numbers);
+  }
+
+  getNumbers():numberData[] {
+    return this.numbers;
+  }
+
+  getForms():numberData[] {
+    return this.forms;
+  }
+
+  addSetData(lucky:numberData[]) {
+    // var tmp;
+    // for(let i = 0;i<lucky.length;i++) {
+    //  this.numbers.push(tmp = new numberData(lucky[i]));
+    this.addAData(this.numbers, lucky);
+    this.saveItem('group', this.numbers);
+    // }
+  }
+
+  addFormData(lucky:numberData[]) {
+    this.addAData(this.forms, lucky);
+    this.saveItem('forms', this.numbers);
+  }
+
+  addToBuild(nums:numberData[]) {
+    this.addAData(this.build, nums);
+    this.saveItem('lucky', this.numbers);
+
+  }
+
+  getBuild():numberData[] {
+    return this.build;
+  }
+
+  initBuild() {
+    this.build = [];
+  }
+
+  private addAData(origin:numberData[], lucky:numberData[]) {
+    // debugger;
+    if (!origin.length) {
+      for (var i = 0; i < lucky.length; i++)
+        origin.push(lucky[i]);
+      return;
     }
-    getSavedNumbers(): Promise<any> {
-        return Promise.resolve(this.numbers);
-    }
-    getNumbers(): numberData[] {
-        return this.numbers;
-    }
-    getForms(): numberData[] {
-        return this.forms;
-    }
-    addSetData(lucky: numberData[]){
-     // var tmp;
-     // for(let i = 0;i<lucky.length;i++) {
-      //  this.numbers.push(tmp = new numberData(lucky[i]));
-        this.addAData(this.numbers, lucky);
-     // }
-    }
-    addFormData(lucky: numberData[]){
-        this.addAData(this.forms,lucky);
-    }
-    addToBuild(nums: numberData[]){
-      this.addAData(this.build,nums);
-    }
-    getBuild(): numberData[]{
-        return this.build;
-    }
-    initBuild(){
-        this.build = [];
-    }
-    private addAData(origin:numberData[],lucky: numberData[]){
-     // debugger;
-        if(!origin.length){
-            for(var i=0;i<lucky.length;i++)
-                origin.push(lucky[i]);
-            return;
-        }
-        var bad =false;
-        for(var i=0;i<lucky.length;i++){
-            var j=0;
-            if(lucky[i].numbers.length==origin[j].numbers.length){
-                for(j=0;j<origin.length;j++){
-                    var k=0;
-                    for(k=0;k<origin[j].numbers.length;k++){
-                        if(lucky[i].numbers[k]!=origin[j][k]){
-                            break;
-                        }
-                    }
-                    if(k==origin[j].numbers.length){
-                        bad = true;
-                    }
-                }
+    var bad = false;
+    for (var i = 0; i < lucky.length; i++) {
+      var j = 0;
+      if (lucky[i].numbers.length == origin[j].numbers.length) {
+        for (j = 0; j < origin.length; j++) {
+          var k = 0;
+          for (k = 0; k < origin[j].numbers.length; k++) {
+            if (lucky[i].numbers[k] != origin[j][k]) {
+              break;
             }
-            if(!bad){
-                origin.push(lucky[i]);
-            }
-            else bad = false;
+          }
+          if (k == origin[j].numbers.length) {
+            bad = true;
+          }
         }
+      }
+      if (!bad) {
+        origin.push(lucky[i]);
+      }
+      else bad = false;
     }
+  }
 
 
-  convert(data : number[][]): numberData[]{
-    var result =[];
+  convert(data:number[][]):numberData[] {
+    var result = [];
 
-    for(var i=0;i<data.length && i < 15;i++)
+    for (var i = 0; i < data.length && i < 15; i++)
       result.push(new numberData(data[i]));
     return result;
   }
@@ -96,10 +161,10 @@ export class userData {
   getAllNumbers() {
     var res:numberData[] = this.build.concat([]);
     var tmp;
-    for(var i=0;i<this.numbers.length;i++) {
+    for (var i = 0; i < this.numbers.length; i++) {
       tmp = this.numbers[i].numbers.concat([]);
       tmp.pop();
-      res=res.concat(new numberData(tmp));
+      res = res.concat(new numberData(tmp));
     }
     return res;
   }
@@ -107,36 +172,37 @@ export class userData {
 var count_deb = 0;
 
 export class numberData {
-  public numbers:number[]=[];
+  public numbers:number[] = [];
   from:Date;
   to:Date;
   reqeustDate:Date;
-  constructor(data : any){
+
+  constructor(data:any) {
     count_deb++;
     try {
       if (typeof data == 'object') {
         if (data.to != undefined) this.to = new Date(data.to);
-        if (data.to != undefined) this.from = new Date(data.from);
+        if (data.from != undefined) this.from = new Date(data.from);
         if (data.reqeustDate != undefined) this.from = new Date(data.reqeustDate);
         else this.reqeustDate = new Date();
         this.numbers = data;
       }
-      if(  count_deb > 1000)
-        debugger;
+      // if (count_deb > 1000)
+      // debugger;
       console.log('numberData.. initialized!!');
       // this.http=http;
     }
-    catch(e){
+    catch (e) {
       console.log(e);
     }
   }
-  isEmpty(): boolean{
-    return this.numbers.length ==0;
+
+  isEmpty():boolean {
+    return this.numbers.length == 0;
   }
 }
 
 
-
 // WEBPACK FOOTER //
 // ./src/services/user.service.ts
 
@@ -149,15 +215,12 @@ export class numberData {
 // ./src/services/user.service.ts
 
 
-
 // WEBPACK FOOTER //
 // ./src/services/user.service.ts
 
 
-
 // WEBPACK FOOTER //
 // ./src/services/user.service.ts
-
 
 
 // WEBPACK FOOTER //

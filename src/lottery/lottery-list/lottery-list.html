@@ -1,6 +1,6 @@
-<div [class.last-ball]="true||recordType=='group'">
-  <ion-item-sliding *ngFor="let item of data" #slidingItem>
-    <ion-item>
+<div  [class.last-ball]="true||recordType=='group'">
+  <ion-item-sliding  *ngFor="let item of data" #slidingItem>
+    <ion-item class="cover">
       <!-- <ion-badge class="ball" *ngFor="let num of item.numbers; let i=index;" item-right>{{num}}</ion-badge>
        -->  <span class="ball" *ngFor="let num of item.numbers; let i=index;" ><span>{{num}}</span></span>
     </ion-item>
@@ -22,4 +22,11 @@
       </button>
     </ion-item-options>
   </ion-item-sliding>
+  <!--<h1 *ngFor="let x of [1,1,1,1,1,1,1,1,1,1]">hi</h1>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="20%">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>-->
 </div>

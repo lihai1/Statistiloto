@@ -3,13 +3,15 @@
   <name>Statistiloto</name>
   <description>amazing statistics for lotteries.</description>
   <author email="lihai2511@gmail.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-  <content src="index.html"/>
+  <content src="http://192.168.1.40:8100" original-src="index.html"/>
   <access origin="*"/>
   <allow-navigation href="http://ionic.local/*"/>
   <allow-navigation href="http://192.168.1.38:8100"/>
   <allow-navigation href="http://192.168.1.20:8100"/>
   <allow-navigation href="http://172.20.10.4:8100"/>
   <allow-navigation href="http://172.20.2.9:8100"/>
+  <allow-navigation href="http://172.20.2.151:8100"/>
+  <allow-navigation href="http://192.168.1.40:8100"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="tel:*"/>
@@ -41,4 +43,6 @@
   <plugin name="cordova-plugin-device" spec="1.1.4"/>
   <plugin name="cordova-plugin-splashscreen" spec="~4.0.1"/>
   <plugin name="ionic-plugin-deploy" spec="~0.6.5"/>
+  <plugin name="cordova-sqlite-storage" spec="~2.0.2"/>
+  <plugin name="cordova-plugin-wkwebview-engine" spec="https://github.com/driftyco/cordova-plugin-wkwebview-engine.git"/>
 </widget>

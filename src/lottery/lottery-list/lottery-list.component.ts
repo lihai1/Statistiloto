@@ -4,16 +4,20 @@
 import {Component, Input, ElementRef} from '@angular/core';
 import {AppTools} from '../../services/appTools.service'
 
-import {ToastController, ItemSliding, ModalController} from 'ionic-angular';
+import {ToastController, ItemSliding, ModalController, InfiniteScroll, Content} from 'ionic-angular';
 import {userData, numberData} from '../../services/user.service';
 import {AnalyzedFormPage} from "../../pages/analyzed-form/analyzed-form";
 
 @Component({
   selector: 'lottery-list',
-  templateUrl: 'lottery-list.html'
+  templateUrl: 'lottery-list.html'//,
+  //viewProviders: [Content]
 })
 export class LotteryList {
   @Input() data:numberData[];
+  loadedData:numberData[] = [];
+  loaded:number = 0;
+  startLoaded:number = 10;
   @Input('recordType') recordType:string;
   @Input() add:boolean = true;
   @Input() disabled:boolean = false;
@@ -26,7 +30,28 @@ export class LotteryList {
     this.toastCtrl = toastCtrl;
     this.user = user;
     this.app = app;
+
     //debugger;
+  }
+
+  ngOnAfterViewInit() {
+    // DO IT
+    /*for (let i = 0; i < this.startLoaded; i++) {
+      this.loadedData.push(this.data[i]);
+    }*/
+  }
+
+  doInfinite(infiniteScroll:InfiniteScroll) {
+    console.log('Begin async operation');
+
+     setTimeout(() => {
+    for (let i = this.loaded; i < this.startLoaded + this.loaded; i++) {
+      this.loadedData.push(this.data[i]);
+    }
+    this.loaded = this.startLoaded + this.loaded;
+    console.log('Async operation has ended');
+    infiniteScroll.complete();
+    }, 500);
   }
 
   addToService(item:numberData, slidingItem:ItemSliding) { //todo
@@ -51,31 +76,3 @@ export class LotteryList {
     modal.present();
   }
 }
-
-
-// WEBPACK FOOTER //
-// ./src/lottery/lottery-list/lottery-list.component.ts
-
-
-// WEBPACK FOOTER //
-// ./src/lottery/lottery-list/lottery-list.component.ts
-
-
-// WEBPACK FOOTER //
-// ./src/lottery/lottery-list/lottery-list.component.ts
-
-
-// WEBPACK FOOTER //
-// ./src/lottery/lottery-list/lottery-list.component.ts
-
-
-// WEBPACK FOOTER //
-// ./src/lottery/lottery-list/lottery-list.component.ts
-
-
-// WEBPACK FOOTER //
-// ./src/lottery/lottery-list/lottery-list.component.ts
-
-
-// WEBPACK FOOTER //
-// ./src/lottery/lottery-list/lottery-list.component.ts

@@ -5,7 +5,6 @@ import {Component} from '@angular/core';
 import {LotteryApi} from '../../services/lottery.service';
 import {userData, numberData} from '../../services/user.service'
 import {AppTools} from '../../services/appTools.service'
-import {LoadingController} from "ionic-angular/index";
 @Component({
   selector: 'lottery-forms',
   templateUrl: 'lottery-forms.html',
@@ -16,7 +15,7 @@ export class LotteryForms {
   choices:number[] = [6, 7, 8, 9, 10, 11, 12];
   willBe:number[] = [];
 
-  constructor(private loadingCtrl: LoadingController,private lotteryApi:LotteryApi,
+  constructor(private lotteryApi:LotteryApi,
               private user:userData,
               private appTools:AppTools) {
    // this.generateNewForms(this.formType, 5);
@@ -29,7 +28,7 @@ export class LotteryForms {
   }
 
   formsChange(event) {
-    this.generateNewForms(this.formType, 5);
+    this.generateNewForms(this.formType, 10);
   }
 
   presentActionSheet() {
@@ -41,17 +40,9 @@ export class LotteryForms {
       });
   }
 
-  private presentLoading() {
-    let loader = this.loadingCtrl.create({
-      content: "מחשב",
-      duration: 3000
-    });
-    loader.present();
-    return loader;
-  }
+
 
   generateNewForms(type1, howMany) {
-    var loader = this.presentLoading();
     var x:numberData[] = this.user.getAllNumbers();
     //var willBe:number[] = [];
     var promise:Promise<number[]>;
@@ -67,7 +58,6 @@ export class LotteryForms {
     }
     promise.then(resolve => {
       this.lotteryApi.getNewForms(type1, howMany, resolve).then(data => {
-        loader.dismiss();
         console.log('generated forms!!');
         console.log(data);
         this.formsRes = this.user.convert(data);

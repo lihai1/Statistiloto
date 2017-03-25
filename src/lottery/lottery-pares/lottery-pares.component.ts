@@ -3,7 +3,7 @@
  */
 import {Component} from '@angular/core';
 
-import {NavController, LoadingController} from 'ionic-angular';
+import {NavController} from 'ionic-angular';
 import {LotteryApi} from '../../services/lottery.service';
 import {userData, numberData} from '../../services/user.service';
 import {AppTools} from '../../services/appTools.service';
@@ -18,8 +18,7 @@ export class LotteryPares {
   paresRes:numberData[] = [];
   strong:string = 'strong';
 
-  constructor(private loadingCtrl: LoadingController,
-              public navCtrl:NavController,
+  constructor(public navCtrl:NavController,
               private lotteryApi:LotteryApi,
               private user:userData,
               private appTools:AppTools) {
@@ -33,7 +32,7 @@ export class LotteryPares {
   }
 
   paresChange(event) {
-    this.calcStatistics(this.pares, 5);
+    this.calcStatistics(this.pares, 10);
   }
 
   presentActionSheet() {
@@ -45,50 +44,14 @@ export class LotteryPares {
       });
   }
 
-  private presentLoading() {
-    let loader = this.loadingCtrl.create({
-      content: "מחשב",
-      duration: 3000
-    });
-    loader.present();
-    return loader;
-  }
   calcStatistics(type_, howMany) {
-    var loader = this.presentLoading();
 
     this.lotteryApi.getNewPares(type_, howMany, this.strong).then(data => {
-      loader.dismiss();
       console.log('calculated stats!!');
       console.log(data);
       this.paresRes = this.user.convert(data);
-      //debugger;
-      
-      // this.user.addSetData(data);
     });
   }
 
 }
 
-
-// WEBPACK FOOTER //
-// ./src/lottery/lottery-pares/lottery-pares.component.ts
-
-
-// WEBPACK FOOTER //
-// ./src/lottery/lottery-pares/lottery-pares.component.ts
-
-
-// WEBPACK FOOTER //
-// ./src/lottery/lottery-pares/lottery-pares.component.ts
-
-
-// WEBPACK FOOTER //
-// ./src/lottery/lottery-pares/lottery-pares.component.ts
-
-
-// WEBPACK FOOTER //
-// ./src/lottery/lottery-pares/lottery-pares.component.ts
-
-
-// WEBPACK FOOTER //
-// ./src/lottery/lottery-pares/lottery-pares.component.ts
