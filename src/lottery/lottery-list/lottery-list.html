@@ -21,7 +21,7 @@
       </button>
     </ion-item-options>
   </ion-item-sliding>
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="needInfinite" threshold="{{infinite>-1?infinite*10+'%':'20%'}}">
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="needInfinite" threshold="30%">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
       loadingText="טוען נתונים נוספים...">

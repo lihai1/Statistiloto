@@ -35,9 +35,10 @@ export class AnalyzedFormPage {
       this.currentList = this.analyzed;
     });
   }
-  currentItem:number=0;
+  currentItem:number=1;
   setTab(i:number){
     this.currentItem=i;
+    setTimeout(()=>window.scrollTo(0,0),100);
   }
   setOpen(item: any){
     var index;

@@ -21,7 +21,6 @@ export class LotteryList {
   @Input('recordType') recordType:string;
   @Input() add:boolean = true;
   @Input() disabled:boolean = false;
-  @Input() infinite:number=-1;
   needInfinite:boolean;
   constructor(myElement:ElementRef,
               private modalCtrl:ModalController,

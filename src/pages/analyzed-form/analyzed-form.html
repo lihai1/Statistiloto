@@ -21,17 +21,17 @@
 
   </ion-navbar>
   <lottery-list [data]="[form]" [disabled]="true"></lottery-list>
-
-</ion-header>
-
-
-<ion-content padding>
   <ion-list-header>
     <button [ngStyle]="{'width':'16%','background-color': i==currentItem?'green':''}" ion-button (click)="setTab(i)"
             *ngFor="let i of [1,2,3,4,5,6]" icon-left>
       {{i}}
     </button>
   </ion-list-header>
+</ion-header>
+
+
+<ion-content padding>
+
   <div *ngFor="let item of analyzed;let i=index">
     <ion-list *ngIf="(i+1)==currentItem">
       <ion-list-header (click)="setOpen(item)">
