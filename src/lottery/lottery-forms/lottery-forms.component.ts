@@ -18,8 +18,6 @@ export class LotteryForms {
   constructor(private lotteryApi:LotteryApi,
               private user:userData,
               private appTools:AppTools) {
-   // this.generateNewForms(this.formType, 5);
-    this.appTools = appTools;
   }
 
   setFormType(_type) {
@@ -32,12 +30,11 @@ export class LotteryForms {
   }
 
   presentActionSheet() {
-    var self = this;
-    this.appTools.presentActionSheet(this.choices,
+    this.appTools.presentActionSheet(
+      this.choices,
       'בחירת שיטטתי',
-      function (type) {
-        self.setFormType(type);
-      });
+      type => this.setFormType(type)
+      );
   }
 
 
@@ -49,9 +46,8 @@ export class LotteryForms {
     if (x.length > 0) {
       promise=this.appTools.presentArraysActionSheet(x,
         'להוסיף גם את מספרי המזל שלך?',
-        type_ =>{
-          return type_;
-        });
+        type_ => type_
+      )
     }
     else {
       promise = new Promise((resolve, reject) => resolve([]));

@@ -22,9 +22,6 @@ export class LotteryPares {
               private lotteryApi:LotteryApi,
               private user:userData,
               private appTools:AppTools) {
-    // this.calcStatistics(this.pares, 5);
-    this.user = user;
-    this.appTools = appTools;
   }
 
   private setParesType(howMany) {
@@ -36,12 +33,9 @@ export class LotteryPares {
   }
 
   presentActionSheet() {
-    var self = this;
     this.appTools.presentActionSheet(this.choices,
       'גודל הקבוצה',
-      function (type) {
-        self.setParesType(type);
-      });
+      type => this.setParesType(type));
   }
 
   calcStatistics(type_, howMany) {

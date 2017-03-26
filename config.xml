@@ -3,7 +3,7 @@
   <name>Statistiloto</name>
   <description>amazing statistics for lotteries.</description>
   <author email="lihai2511@gmail.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-  <content src="http://192.168.1.40:8100" original-src="index.html"/>
+  <content src="index.html"/>
   <access origin="*"/>
   <allow-navigation href="http://ionic.local/*"/>
   <allow-navigation href="http://192.168.1.38:8100"/>

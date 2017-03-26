@@ -2,10 +2,9 @@
     <ion-list-header>
         <span>טופס לוטו {{formType!=6?'שיטטתי':'רגיל'}} </span><span>{{formType==6?"":formType}}</span>
     </ion-list-header>
-
     <button (click)="presentActionSheet()" ion-button outline full>
         בחר את השיטה!
     </button>
     <button (click)="formsChange(event)" ion-button full>!הגרל טופס שמעולם לא זכה</button>
-    <lottery-list [data]="formsRes" [recordType]="'form'"></lottery-list>
+    <lottery-list *ngIf="undefined!==formsRes&&formsRes.length>0" [data]="formsRes" [recordType]="'form'"></lottery-list>
 </ion-list>

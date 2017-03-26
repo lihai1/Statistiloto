@@ -22,6 +22,6 @@
   </ion-list>
   <button (click)="paresChange(event)" ion-button full>!חשב</button>
 
-  <lottery-list [data]="paresRes" [recordType]="'group'"></lottery-list>
+  <lottery-list *ngIf="undefined!==paresRes&&paresRes.length>0" [data]="paresRes" [recordType]="'group'"></lottery-list>
 </ion-list>
 

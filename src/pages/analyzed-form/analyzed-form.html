@@ -8,7 +8,6 @@
   <ion-navbar>
 
 
-
     <ion-toolbar>
       <ion-buttons start>
         <button ion-button color="danger" (click)="closePage()" icon-left>
@@ -20,20 +19,29 @@
     </ion-toolbar>
 
 
-
   </ion-navbar>
-  <lottery-list [data]="[form]" [disabled]="true" ></lottery-list>
+  <lottery-list [data]="[form]" [disabled]="true"></lottery-list>
 
 </ion-header>
 
+
 <ion-content padding>
-  <ion-list *ngFor="let item of analyzed">
-    <ion-list-header (click)="setOpen(item)">
+  <ion-list-header>
+    <button [ngStyle]="{'width':'16%','background-color': i==currentItem?'green':''}" ion-button (click)="setTab(i)"
+            *ngFor="let i of [1,2,3,4,5,6]" icon-left>
+      {{i}}
+    </button>
+  </ion-list-header>
+  <div *ngFor="let item of analyzed;let i=index">
+    <ion-list *ngIf="(i+1)==currentItem">
+      <ion-list-header (click)="setOpen(item)">
         {{item.title}}
-    </ion-list-header>
-    <div *ngIf="open(item)">
-    <lottery-list [data]="item.numbers" [recordType]="'group'" ></lottery-list>
+      </ion-list-header>
+      <div *ngIf="open(item)">
+        <lottery-list [data]="item.numbers" [recordType]="'group'"></lottery-list>
+      </div>
+    </ion-list>
   </div>
-  </ion-list>
   <button (click)="closePage()" ion-button full>סגור</button>
 </ion-content>
+

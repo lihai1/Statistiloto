@@ -35,14 +35,17 @@ export class AnalyzedFormPage {
       this.currentList = this.analyzed;
     });
   }
-
+  currentItem:number=0;
+  setTab(i:number){
+    this.currentItem=i;
+  }
   setOpen(item: any){
     var index;
     if(index = this.currentList.indexOf(item)==-1){
-      this.currentList.push(item);
+     // this.currentList.push(item);
     }
     else{
-      this.currentList.splice(index,1);
+    //  this.currentList.splice(index,1);
     }
   }
   open(item:any){

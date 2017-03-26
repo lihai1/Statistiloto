@@ -16,7 +16,7 @@ import {AppTools} from '../services/appTools.service';
 })
 export class MenuPage{
 
-  pages:any[] = [{page:userFormsPage,text:'הנתונים שלי'},
+  pages:any[] = [{page:userFormsPage,text:'המספרים שלי'},
     {page:TabsPage,text:'סטטיסטיקה'},
     {page:RegisterPage,text:'הרשמה'}];
 

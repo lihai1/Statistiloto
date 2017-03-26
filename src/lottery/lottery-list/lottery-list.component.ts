@@ -4,54 +4,62 @@
 import {Component, Input, ElementRef} from '@angular/core';
 import {AppTools} from '../../services/appTools.service'
 
-import {ToastController, ItemSliding, ModalController, InfiniteScroll, Content} from 'ionic-angular';
+import {ToastController, ItemSliding, ModalController, InfiniteScroll} from 'ionic-angular';
 import {userData, numberData} from '../../services/user.service';
 import {AnalyzedFormPage} from "../../pages/analyzed-form/analyzed-form";
 
 @Component({
   selector: 'lottery-list',
-  templateUrl: 'lottery-list.html'//,
-  //viewProviders: [Content]
+  templateUrl: 'lottery-list.html'
 })
 export class LotteryList {
-  @Input() data:numberData[];
+  //@Input() data:numberData[];
   loadedData:numberData[] = [];
-  loaded:number = 0;
+  loaded:number;
+  private allData:numberData[];
   startLoaded:number = 10;
   @Input('recordType') recordType:string;
   @Input() add:boolean = true;
   @Input() disabled:boolean = false;
-
+  @Input() infinite:number=-1;
+  needInfinite:boolean;
   constructor(myElement:ElementRef,
               private modalCtrl:ModalController,
               private user:userData,
               public toastCtrl:ToastController,
               private app:AppTools) {
-    this.toastCtrl = toastCtrl;
-    this.user = user;
-    this.app = app;
-
-    //debugger;
+      this.loaded = this.startLoaded;
   }
-
-  ngOnAfterViewInit() {
-    // DO IT
-    /*for (let i = 0; i < this.startLoaded; i++) {
+  @Input() public set data(d: any) {
+    this.allData = d;
+    this.loadedData=[];
+    this.checkInfiniteNeed();
+    for (let i = 0; this.data&&i < this.startLoaded && i<this.data.length; i++) {
       this.loadedData.push(this.data[i]);
-    }*/
+    }
   }
+  public get data() {
+    return this.allData;
+  }
+  ngOnInit() {
+    // DO IT
 
+  }
+  private checkInfiniteNeed(){
+      this.needInfinite=this.data&&this.data.length>this.startLoaded;
+  }
   doInfinite(infiniteScroll:InfiniteScroll) {
     console.log('Begin async operation');
 
-     setTimeout(() => {
-    for (let i = this.loaded; i < this.startLoaded + this.loaded; i++) {
+     //setTimeout(() => {
+    for (let i = this.loaded; i < this.startLoaded + this.loaded &&i<this.data.length; i++) {
       this.loadedData.push(this.data[i]);
     }
+    this.checkInfiniteNeed();
     this.loaded = this.startLoaded + this.loaded;
     console.log('Async operation has ended');
     infiniteScroll.complete();
-    }, 500);
+   // }, 500);
   }
 
   addToService(item:numberData, slidingItem:ItemSliding) { //todo
