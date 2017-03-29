@@ -1,15 +1,20 @@
-<div  [class.last-ball]="true||recordType=='group'">
+<div [class.last-ball]="true||recordType=='group'">
   <ion-item-sliding *ngFor="let item of loadedData; let i=index;" #slidingItem>
-    <ion-item class="cover">
+    <ion-item>
       <!-- <ion-badge class="ball" *ngFor="let num of item.numbers; let i=index;" item-right>{{num}}</ion-badge>
-       -->  <span class="ball" *ngFor="let num of item.numbers" ><span>{{num}}</span></span>
+       -->
+      <span class="cover" *ngFor="let num of item.numbers">
+        <span class="ball">
+          <span>{{num}}</span>
+        </span>
+      </span>
     </ion-item>
     <ion-item-options side="right" *ngIf="true||add&&!disabled">
       <button ion-button (click)="analyzeModal(item,slidingItem)" color="secondary" icon-left>
         <ion-icon name="calculator"></ion-icon>
         נתח
       </button>
-      <button ion-button (click)="addToService(item,slidingItem)"  *ngIf="add&&!disabled"color="positive" icon-left>
+      <button ion-button (click)="addToService(item,slidingItem)" *ngIf="add&&!disabled" color="positive" icon-left>
         <ion-icon name="add-circle"></ion-icon>
         הוסף
       </button>

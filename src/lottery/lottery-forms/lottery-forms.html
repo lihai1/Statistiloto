@@ -6,5 +6,5 @@
         בחר את השיטה!
     </button>
     <button (click)="formsChange(event)" ion-button full>!הגרל טופס שמעולם לא זכה</button>
-    <lottery-list *ngIf="undefined!==formsRes&&formsRes.length>0" [data]="formsRes" [recordType]="'form'"></lottery-list>
+    <lottery-list [ngClass]="animationState" *ngIf="undefined!==formsRes&&formsRes.length>0" [data]="formsRes" [recordType]="'form'"></lottery-list>
 </ion-list>

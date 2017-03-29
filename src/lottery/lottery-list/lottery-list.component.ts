@@ -1,7 +1,7 @@
 /**
  * Created by LihaiMac on 2/28/17.
  */
-import {Component, Input, ElementRef} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {AppTools} from '../../services/appTools.service'
 
 import {ToastController, ItemSliding, ModalController, InfiniteScroll} from 'ionic-angular';
@@ -22,8 +22,7 @@ export class LotteryList {
   @Input() add:boolean = true;
   @Input() disabled:boolean = false;
   needInfinite:boolean;
-  constructor(myElement:ElementRef,
-              private modalCtrl:ModalController,
+  constructor(private modalCtrl:ModalController,
               private user:userData,
               public toastCtrl:ToastController,
               private app:AppTools) {

@@ -1,127 +1,43 @@
-lottery-list{
-  ion-item-sliding{
+lottery-list {
+  ion-item-sliding {
     direction: ltr;
   }
-  ion-label{
+  ion-label {
     white-space: initial;
     line-height: 22px;
   }
 
 }
+
 .above-tabs > .toast-wrapper.toast-bottom {
-    bottom: 7vh;
+  bottom: 7vh;
 }
+
+
 span.ball {
+
+  margin-top: 5px;
   background-color: red;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
+  width: 1.7em;
+  height: 1.7em;
   display: inline-flex;
   margin-right: 5px;
+
 }
+
 span.ball > span{
   text-align: center;
   width: 100%;
+  margin:auto;
+
 }
-.last-ball span.ball:last-child{
+.cover{
+  font-size:15px;
+}
+.last-ball .cover:last-child span.ball{
   background-color: #0d81ff;
-  font-size:19px;
+  font-size:17px;
+
 }
 
-
-
-/*
-
-<style>
-@import "compass/css3";
-
-$stripe-color: lighten(skyblue, 10%);
-$stripe-background: skyblue;
-$stripe-size: 50px;
-
-$ball-color: red;
-.container{
-  width:401px;
-}
-
-.ball {
-  position:relative;
-  width:70px;
-  height:70px;
-  opacity: .75;
-  display:inline-block;
-  span{
-    //left:25%;
-    animation-name: Shrink;
-
-    bottom:32px;
-    position:relative;
-    z-index:111;
-  }
-  &:before, &:after {
-    animation: .8s ease-in-out alternate 5;
-    content: "";
-    display: block;
-    border-radius: 50%;
-    margin: 0 auto;
-    position: relative;
-    left: 0;
-    right: 0;
-  }
-
-  &:before {
-    animation-name: Bounce;
-    background: radial-gradient(farthest-side at 44% 28%, lighten($ball-color, 32%), $ball-color 30%, darken($ball-color, 25%) 150%);
-    height: 50px;
-    width: 50px;
-    z-index: 2;
-  }
-
-  &:after {
-    opacity: .45;
-    animation-name: Shrink;
-    height: 15px;
-    width: 70px;
-    background: #000;
-    box-shadow: 0 0 4px #000;
-    bottom: 5px;
-  }
-}
-
-@-moz-keyframes Bounce {
-  0% {bottom: 0%;}
-  50% {bottom: 50%;transform: scale(1.15, .8);}
-  70% {transform: scale(1, 1);}
-  100% {bottom: 0; }
-}
-
-@keyframes Bounce {
-  0% {bottom: 0%;}
-  50% {bottom: 50%;transform: scale(1.15, .8);}
-  70% {transform: scale(1, 1);}
-  100% {bottom: 0; }
-}
-
-@-moz-keyframes Shrink {
-  0% {transform: scale(1.1); opacity: .15;}
-  100% {transform: scale(.6); opacity: .45;}
-}
-
-@keyframes Shrink {
-  0% {transform: scale(1.1); opacity: .15;}
-  100% {transform: scale(.6); opacity: .45;}
-}
-</style>
-<div class="container">
-<div class="ball"></div>
-<span class="number">1</span>
-
-<div class="ball"><span>13</span></div>
-<div class="ball"><span>31</span></div>
-<div class="ball"><span>1</span></div>
-<div class="ball"><span>1</span></div>
-<div class="ball"><span>1</span></div>
-<div class="ball"><span>1</span></div>
-
-</div>*/

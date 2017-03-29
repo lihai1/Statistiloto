@@ -1,7 +1,7 @@
 /**
  * Created by LihaiMac on 2/28/17.
  */
-import {Component} from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import {LotteryApi} from '../../services/lottery.service';
 import {userData, numberData} from '../../services/user.service'
 import {AppTools} from '../../services/appTools.service'
@@ -15,11 +15,15 @@ export class LotteryForms {
   choices:number[] = [6, 7, 8, 9, 10, 11, 12];
   willBe:number[] = [];
 
-  constructor(private lotteryApi:LotteryApi,
+  constructor(private myElement:ElementRef,
+              private lotteryApi:LotteryApi,
               private user:userData,
               private appTools:AppTools) {
   }
 
+  ngOnInit(){
+
+  }
   setFormType(_type) {
     this.formType = _type;
     // this.formsChange(null);
@@ -38,7 +42,7 @@ export class LotteryForms {
   }
 
 
-
+  animationState:string;
   generateNewForms(type1, howMany) {
     var x:numberData[] = this.user.getAllNumbers();
     //var willBe:number[] = [];
@@ -57,6 +61,11 @@ export class LotteryForms {
         console.log('generated forms!!');
         console.log(data);
         this.formsRes = this.user.convert(data);
+        this.animationState = "";
+        setTimeout(()=>{
+         // var list = document.querySelectorAll(".cover");
+          this.animationState = "done";
+        },2000);
         //this.formsRes = data;
         // this.user.addFormData(this.formsRes);
       });
