@@ -21,12 +21,12 @@
 
   </ion-navbar>
   <lottery-list [data]="[form]" [disabled]="true"></lottery-list>
-  <ion-list-header>
+  <ion-list>
     <button [ngStyle]="{'width':'16%','background-color': i==currentItem?'green':''}" ion-button (click)="setTab(i)"
             *ngFor="let i of [1,2,3,4,5,6]" icon-left>
       {{i}}
     </button>
-  </ion-list-header>
+  </ion-list>
 </ion-header>
 
 
