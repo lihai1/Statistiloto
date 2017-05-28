@@ -5,12 +5,11 @@ import {Injectable} from '@angular/core'
 import {Http} from '@angular/http'
 import 'rxjs/operator/map'
 import 'rxjs/add/operator/toPromise';
-import { NativeStorage } from '@ionic-native/native-storage';
 import {Platform} from "ionic-angular/index";
 
 @Injectable()
 export class userData {
-  constructor(private platform:Platform,private http:Http, private nativeStorage:NativeStorage/*, private storage:Storage*/) {
+  constructor(private platform:Platform,private http:Http/*, private nativeStorage:NativeStorage*/) {
     this.getFromStorage();
     /*storage.ready().then(() => {
 
@@ -41,7 +40,7 @@ export class userData {
    });
    }*/
   private getFromStorage() {
-    this.platform.ready().then(() => {
+   /* this.platform.ready().then(() => {
 
       this.nativeStorage.getItem('group')
         .then(
@@ -58,10 +57,10 @@ export class userData {
           data => this.forms = data,
           error => console.log('forms' + error)
         );
-    });
+    });*/
   }
   private saveItem(type:string,data:numberData[]){
-    this.nativeStorage.setItem(type, JSON.stringify(data));
+    //this.nativeStorage.setItem(type, JSON.stringify(data));
   }
   private forms:numberData[] = [];
   private numbers:numberData[] = [];

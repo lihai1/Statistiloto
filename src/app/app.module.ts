@@ -19,12 +19,11 @@ import {AppTools} from '../services/appTools.service'
 import {RegisterPage} from '../pages/regiser-form/regiser-form';
 import { AuthService } from '../services/auth.service';
 
-
 import {MenuPage} from '../menu/menu.component';
 import {AnalyzedFormPage} from "../pages/analyzed-form/analyzed-form";
 import {LotteryApi} from "../services/lottery.service";
 import {userData} from "../services/user.service";
-import {NativeStorage} from "@ionic-native/native-storage";
+//import {NativeStorage} from "@ionic-native/native-storage";
 
 const cloudSettings:CloudSettings = {
   'core': {
@@ -74,7 +73,7 @@ const cloudSettings:CloudSettings = {
     AnalyzedFormPage
   ],
   providers: [
-    NativeStorage,
+    /*NativeStorage,*/
     AppTools,
     userData,
     AuthService,

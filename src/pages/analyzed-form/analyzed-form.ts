@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {NavController, NavParams, ViewController} from 'ionic-angular';
 import {LotteryApi} from '../../services/lottery.service';
 import {AnalyzedData, ArraysFilter} from "../../pipes/arrays-filter";
-import {userData, numberData} from "../../services/user.service";
+import {numberData} from "../../services/user.service";
 /*
  Generated class for the AnalyzedForm page.
 

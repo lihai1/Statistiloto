@@ -13,7 +13,7 @@ export class RegisterPage {
 
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController) {}
 
-  public register() {
+  public login() {
     this.auth.register(this.registerCredentials).subscribe(success => {
         if (success) {
           this.createSuccess = true;
