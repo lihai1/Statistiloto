@@ -35,6 +35,7 @@ export class ArraysFilter {
     return res;
   }
 }
+
 export class AnalyzedData {
   archiveSize:number;
   count:number;

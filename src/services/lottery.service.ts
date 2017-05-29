@@ -46,23 +46,26 @@ export class LotteryApi {
    .map(this.extractData)
    .catch(this.handleError);
    }*/
-  private handleError(error:Response | any) {
+  private handleError(error: any) {
     // In a real world app, you might use a remote logging infrastructure
-    let errMsg:string;
+    /*let errMsg:string;
     if (error instanceof Response) {
       const body = error.json() || '';
       const err = body.error || JSON.stringify(body);
       errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
     } else {
+      if(typeof(error) ==  "object")
       errMsg = error.message ? error.message : error.toString();
     }
-    console.error(errMsg);
-    return Observable.throw(errMsg);
+    console.error(errMsg);*/
+    debugger;
+    return Observable.throw(error);
   }
 
   private extractData(res:Response | any) {
     let body = res.json();
-    return body.data || {};
+    //debugger;
+    return body;//.data;
   }
 
   getNewForms(type_:number, howMany:number, willBe:number[], strong?:string):Observable<any> {
@@ -98,11 +101,11 @@ export class LotteryApi {
       strong: (strong == undefined || strong == 'strong') ? 0 : 1
     }).map((res) => {
       loader.dismiss();
-      this.extractData(res);
+      return this.extractData(res);
     }).catch(err => {
       loader.dismiss();
       this.badAlert();
-      this.handleError(err);
+      return this.handleError(err);
     });
     /*.toPromise()
      .then(data=> {
@@ -124,7 +127,7 @@ export class LotteryApi {
     }).map(this.extractData)
       .catch(err => {
         this.badAlert();
-        this.handleError(err);
+        return this.handleError(err);
       });
   }
 

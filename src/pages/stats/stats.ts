@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 
 import {NavController} from 'ionic-angular';
-import {userData} from '../../services/user.service';
 import {LotteryApi} from "../../services/lottery.service";
+import {userData} from "../../services/user.service";
 
 @Component({
   selector: 'page-stats',
@@ -26,7 +26,8 @@ export class StatsPage {
   }
 
   calcStatistics(type, howMany) {
-    this.lotteryApi.getNewPares(type, howMany).then(data => {
+    this.lotteryApi.getNewPares(type, howMany).subscribe(data => {
+      debugger;
       console.log('calculated stats!!');
       console.log(data);
       this.paresRes = data;

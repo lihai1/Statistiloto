@@ -4,9 +4,9 @@
 import {Component} from '@angular/core';
 
 import {NavController} from 'ionic-angular';
-import {LotteryApi} from '../../services/lottery.service';
-import {userData, numberData} from '../../services/user.service';
-import {AppTools} from '../../services/appTools.service';
+import {numberData, userData} from "../../services/user.service";
+import {LotteryApi} from "../../services/lottery.service";
+import {AppTools} from "../../services/appTools.service";
 
 @Component({
   selector: 'lottery-pares',

@@ -1,7 +1,8 @@
 
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController , ModalController } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
+import {CreateUserForm} from "../create-user-form/create-form";
 
 @Component({
   selector: 'page-register-form',
@@ -11,20 +12,36 @@ export class RegisterPage {
   createSuccess = false;
   registerCredentials = {email: '', password: ''};
 
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController) {}
+  constructor(private modalCtrl:ModalController,private nav: NavController, private auth: AuthService, private alertCtrl: AlertController) {}
 
   public login() {
     this.auth.register(this.registerCredentials).subscribe(success => {
-        if (success) {
-          this.createSuccess = true;
-          this.showPopup("Success", "Account created.");
-        } else {
-          this.showPopup("Error", "Problem creating account.");
-        }
-      },
-      error => {
-        this.showPopup("Error", error);
-      });
+          if (success) {
+            this.createSuccess = true;
+            this.showPopup("Success", "Account created.");
+          } else {
+            this.showPopup("Error", "Problem creating account.");
+          }
+        },
+        error => {
+          this.showPopup("Error", error);
+        });
+  }
+
+  public createAccount() {
+    let modal = this.modalCtrl.create(CreateUserForm);
+    modal.present();
+   /* this.auth.register(this.registerCredentials).subscribe(success => {
+          if (success) {
+            this.createSuccess = true;
+            this.showPopup("Success", "Account created.");
+          } else {
+            this.showPopup("Error", "Problem creating account.");
+          }
+        },
+        error => {
+          this.showPopup("Error", error);
+        });*/
   }
 
   showPopup(title, text) {
@@ -36,7 +53,7 @@ export class RegisterPage {
           text: 'OK',
           handler: data => {
             if (this.createSuccess) {
-              this.nav.popToRoot();
+        //      this.nav.popToRoot();
             }
           }
         }

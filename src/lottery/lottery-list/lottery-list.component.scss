@@ -39,4 +39,7 @@ span.ball > span{
   font-size:17px;
 
 }
-
+.last-ball .cover.regular-ball:last-child span.ball{
+  background-color: red ;
+  font-size:15px;
+}

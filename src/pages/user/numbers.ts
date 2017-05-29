@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import {userData, numberData} from "../../services/user.service";
 
-import {userData, numberData} from '../../services/user.service';
 
 @Component({
   selector: 'page-user-numbers',

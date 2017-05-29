@@ -2,10 +2,10 @@
  * Created by LihaiMac on 2/28/17.
  */
 import {Component, Input} from '@angular/core';
-import {AppTools} from '../../services/appTools.service'
 
 import {ToastController, ItemSliding, ModalController, InfiniteScroll} from 'ionic-angular';
-import {userData, numberData} from '../../services/user.service';
+import {AppTools} from "../../services/appTools.service";
+import {userData, numberData} from "../../services/user.service";
 import {AnalyzedFormPage} from "../../pages/analyzed-form/analyzed-form";
 
 @Component({
@@ -21,6 +21,8 @@ export class LotteryList {
   @Input('recordType') recordType:string;
   @Input() add:boolean = true;
   @Input() disabled:boolean = false;
+  lastBallClass:string ='';
+
   needInfinite:boolean;
   constructor(private modalCtrl:ModalController,
               private user:userData,
@@ -41,7 +43,11 @@ export class LotteryList {
   }
   ngOnInit() {
     // DO IT
-
+    
+  }
+  ngAfterViewInit(){
+    if(this.recordType == 'lucky')
+      this.lastBallClass = 'regular-ball';
   }
   private checkInfiniteNeed(){
       this.needInfinite=this.data&&this.data.length>this.startLoaded;
@@ -73,7 +79,9 @@ export class LotteryList {
 
   removeItem(index:number, slidingItem:ItemSliding) {
     slidingItem.close();
-    this.data.splice(index, 1);
+    this.allData.splice(this.loaded - 10 + index, 1);
+    this.loadedData.splice(index, 1);
+
   }
 
   analyzeModal(item:numberData, slidingItem:ItemSliding) {

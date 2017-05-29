@@ -2,9 +2,9 @@
  * Created by LihaiMac on 2/28/17.
  */
 import {Component, ElementRef} from '@angular/core';
-import {LotteryApi} from '../../services/lottery.service';
-import {userData, numberData} from '../../services/user.service'
-import {AppTools} from '../../services/appTools.service'
+import {userData, numberData} from "../../services/user.service";
+import {LotteryApi} from "../../services/lottery.service";
+import {AppTools} from "../../services/appTools.service";
 @Component({
   selector: 'lottery-forms',
   templateUrl: 'lottery-forms.html',
@@ -41,7 +41,6 @@ export class LotteryForms {
       );
   }
 
-
   animationState:string;
   generateNewForms(type1, howMany) {
     var x:numberData[] = this.user.getAllNumbers();
@@ -56,16 +55,18 @@ export class LotteryForms {
     else {
       promise = Promise.resolve([]);
     }
+    
     promise.then(resolve => {
       this.lotteryApi.getNewForms(type1, howMany, resolve).subscribe(data => {
         console.log('generated forms!!');
         console.log(data);
+        //debugger;
         this.formsRes = this.user.convert(data);
         this.animationState = "";
-        setTimeout(()=>{
+        //setTimeout(()=>{
          // var list = document.querySelectorAll(".cover");
-          this.animationState = "done";
-        },2000);
+        this.animationState = "done";
+        //},2000);
         //this.formsRes = data;
         // this.user.addFormData(this.formsRes);
       },error => {});
@@ -78,7 +79,3 @@ export class LotteryForms {
 // WEBPACK FOOTER //
 // ./src/lottery/lottery-forms/lottery-forms.component.ts
 
-
-
-// WEBPACK FOOTER //
-// ./src/lottery/lottery-forms/lottery-forms.component.ts
