@@ -54,10 +54,10 @@ export class LotteryForms {
       )
     }
     else {
-      promise = new Promise((resolve, reject) => resolve([]));
+      promise = Promise.resolve([]);
     }
     promise.then(resolve => {
-      this.lotteryApi.getNewForms(type1, howMany, resolve).then(data => {
+      this.lotteryApi.getNewForms(type1, howMany, resolve).subscribe(data => {
         console.log('generated forms!!');
         console.log(data);
         this.formsRes = this.user.convert(data);
@@ -68,7 +68,7 @@ export class LotteryForms {
         },2000);
         //this.formsRes = data;
         // this.user.addFormData(this.formsRes);
-      });
+      },error => {});
     });
   }
 

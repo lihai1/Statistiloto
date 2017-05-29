@@ -30,7 +30,7 @@ export class AnalyzedFormPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AnalyzedFormPage');
-    this.lottery.getAnalyze(this.form.numbers).then(data => {
+    this.lottery.getAnalyze(this.form.numbers).subscribe(data => {
       this.analyzed=this.analyzedPipe.transform(data,6);
       this.currentList = this.analyzed;
     });

@@ -7,6 +7,7 @@ import {Http} from '@angular/http'
 import 'rxjs/operator/map'
 import 'rxjs/add/operator/toPromise';
 import {AlertController, Platform, LoadingController} from "ionic-angular/index";
+import {Observable} from "rxjs/Rx";
 @Injectable()
 export class LotteryApi {
   baseUrl:string;
@@ -40,7 +41,31 @@ export class LotteryApi {
     this.endDate = date;
   }
 
-  getNewForms(type_:number, howMany:number, willBe:number[], strong?:string):Promise<any> {
+  /*Observable<Hero[]> {
+   return this.http.get(this.heroesUrl)
+   .map(this.extractData)
+   .catch(this.handleError);
+   }*/
+  private handleError(error:Response | any) {
+    // In a real world app, you might use a remote logging infrastructure
+    let errMsg:string;
+    if (error instanceof Response) {
+      const body = error.json() || '';
+      const err = body.error || JSON.stringify(body);
+      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+    } else {
+      errMsg = error.message ? error.message : error.toString();
+    }
+    console.error(errMsg);
+    return Observable.throw(errMsg);
+  }
+
+  private extractData(res:Response | any) {
+    let body = res.json();
+    return body.data || {};
+  }
+
+  getNewForms(type_:number, howMany:number, willBe:number[], strong?:string):Observable<any> {
     var loader = this.presentLoading();
 
     return this.http.post(this.baseUrl + this.generate, {
@@ -50,18 +75,20 @@ export class LotteryApi {
       from: this.startDate,
       to: this.endDate,
       strong: (strong == undefined || strong == 'strong') ? 0 : 1
-    }).toPromise()
-      .then(data=> {
-        loader.dismiss();
-        return data.json();
-      }).catch(err=> {
-        loader.dismiss();
-        this.badAlert();
-        return Promise.resolve([]);
-      });
+    }).map(this.extractData)
+      .catch(this.handleError);
+    /*.toPromise()
+     .then(data=> {
+     loader.dismiss();
+     return data.json();
+     }).catch(err=> {
+     loader.dismiss();
+     this.badAlert();
+     return Promise.resolve([]);
+     });*/
   }
 
-  getNewPares(type:number, howMany:number, strong?:string):Promise<any> {
+  getNewPares(type:number, howMany:number, strong?:string):Observable<any> {
     var loader = this.presentLoading();
     return this.http.post(this.baseUrl + this.calcStat, {
       howMany: howMany,
@@ -69,31 +96,36 @@ export class LotteryApi {
       from: this.startDate,
       to: this.endDate,
       strong: (strong == undefined || strong == 'strong') ? 0 : 1
-    }).toPromise()
-      .then(data=> {
-        loader.dismiss();
-        return data.json();
-      }).catch(err=> {
-        loader.dismiss();
-        this.badAlert();
-        return Promise.resolve([]);
-      });
+    }).map((res) => {
+      loader.dismiss();
+      this.extractData(res);
+    }).catch(err => {
+      loader.dismiss();
+      this.badAlert();
+      this.handleError(err);
+    });
+    /*.toPromise()
+     .then(data=> {
+     loader.dismiss();
+     return data.json();
+     }).catch(err=> {
+     loader.dismiss();
+     this.badAlert();
+     return Promise.resolve([]);
+     });*/
   }
 
 
-  getAnalyze(form:number[]):Promise<any> {
+  getAnalyze(form:number[]):Observable<any> {
     return this.http.post(this.baseUrl + this.analyze, {
       from: this.startDate,
       to: this.endDate,
       form: form
-    }).toPromise()
-      .then(data=> {
-        return data.json();
-      }).catch(err=> {
+    }).map(this.extractData)
+      .catch(err => {
         this.badAlert();
-        return Promise.resolve([]);
+        this.handleError(err);
       });
-
   }
 
   private presentLoading() {

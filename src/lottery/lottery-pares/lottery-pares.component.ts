@@ -40,7 +40,7 @@ export class LotteryPares {
 
   calcStatistics(type_, howMany) {
 
-    this.lotteryApi.getNewPares(type_, howMany, this.strong).then(data => {
+    this.lotteryApi.getNewPares(type_, howMany, this.strong).subscribe(data => {
       console.log('calculated stats!!');
       console.log(data);
       this.paresRes = this.user.convert(data);
