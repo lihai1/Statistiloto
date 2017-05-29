@@ -8,13 +8,15 @@ import 'rxjs/add/operator/toPromise';
 import {Platform, LoadingController, AlertController} from "ionic-angular/index";
 import {Observable} from "rxjs/Rx";
 import {AppSettings} from "./appSettings.service";
+import {Device} from "@ionic-native/device";
 
 @Injectable()
 export class userData {
-  constructor(private platform:Platform,private http:Http,
+  constructor(private platform:Platform, private http:Http,
               private loadingCtrl:LoadingController,
               private settings:AppSettings,
-              private alertCtrl:AlertController/*, private nativeStorage:NativeStorage*/) {
+              private alertCtrl:AlertController,
+              private device:Device/*, private nativeStorage:NativeStorage*/) {
     this.getFromStorage();
     /*storage.ready().then(() => {
 
@@ -36,6 +38,7 @@ export class userData {
     console.log('userData.. initialized!!');
     // this.http=http;
   }
+
   /*
    private addToStorage(type:string,record:numberData){
    this.storage.get('type').then(data=>{
@@ -45,28 +48,30 @@ export class userData {
    });
    }*/
   private getFromStorage() {
-   /* this.platform.ready().then(() => {
+    /* this.platform.ready().then(() => {
 
-      this.nativeStorage.getItem('group')
-        .then(
-          data => this.numbers = data,
-          error => console.log('group' + error)
-        );
-      this.nativeStorage.getItem('lucky')
-        .then(
-          data => this.build = data,
-          error => console.log('lucky' + error)
-        );
-      this.nativeStorage.getItem('forms')
-        .then(
-          data => this.forms = data,
-          error => console.log('forms' + error)
-        );
-    });*/
+     this.nativeStorage.getItem('group')
+     .then(
+     data => this.numbers = data,
+     error => console.log('group' + error)
+     );
+     this.nativeStorage.getItem('lucky')
+     .then(
+     data => this.build = data,
+     error => console.log('lucky' + error)
+     );
+     this.nativeStorage.getItem('forms')
+     .then(
+     data => this.forms = data,
+     error => console.log('forms' + error)
+     );
+     });*/
   }
-  private saveItem(type:string,data:numberData[]){
+
+  private saveItem(type:string, data:numberData[]) {
     //this.nativeStorage.setItem(type, JSON.stringify(data));
   }
+
   private forms:numberData[] = [];
   private numbers:numberData[] = [];
   private build:numberData[] = [];
@@ -103,7 +108,6 @@ export class userData {
     this.saveItem('group', this.numbers);
     // }
   }
-
 
 
   addFormData(lucky:numberData[]) {
@@ -174,7 +178,8 @@ export class userData {
     }
     return res;
   }
-  private handleError(error: any) {
+
+  private handleError(error:any) {
     // In a real world app, you might use a remote logging infrastructure
     /*let errMsg:string;
      if (error instanceof Response) {
@@ -195,6 +200,7 @@ export class userData {
     //debugger;
     return body;//.data;
   }
+
   private badAlert() {
     this.alertCtrl.create({
       title: 'שגיאה',
@@ -204,10 +210,11 @@ export class userData {
       }]
     }).present();
   }
+
   private presentLoading() {
     let loader = this.loadingCtrl.create({
       content: "מחשב"//,
-     // duration: 3000
+      // duration: 3000
     });
     loader.present();
     return loader;
@@ -216,7 +223,10 @@ export class userData {
   //todo create user class
   registerUser(user:any):Observable<any> {
     var loader = this.presentLoading();
-    return this.http.post(this.settings.API_USER + "add",user).map((res) => {
+    if(this.device.uuid)
+      user.uuid = this.device.uuid;
+    debugger;
+    return this.http.post(this.settings.API_USER + "add", user).map((res) => {
       loader.dismiss();
       debugger;
       return this.extractData(res);
@@ -268,7 +278,6 @@ export class numberData {
   isEmpty():boolean {
     return this.numbers.length == 0;
   }
-
 
 
 }

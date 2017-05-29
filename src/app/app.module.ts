@@ -26,6 +26,7 @@ import {LotteryApi} from "../services/lottery.service";
 import {CloudSettings, CloudModule} from '@ionic/cloud-angular'
 import {CreateUserForm} from "../pages/create-user-form/create-form";
 import {AppSettings} from "../services/appSettings.service";
+import {Device} from "@ionic-native/device";
 
 const cloudSettings:CloudSettings = {
   'core': {
@@ -78,6 +79,7 @@ const cloudSettings:CloudSettings = {
     AuthService,
     LotteryApi,
     AppSettings,
+    Device,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

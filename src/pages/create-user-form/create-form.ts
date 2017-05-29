@@ -49,7 +49,9 @@ export class CreateUserForm {
     });
     alert.present();
   }
-  createAccount(){
 
+
+  closePage() {
+    this.viewCtrl.dismiss();
   }
 }

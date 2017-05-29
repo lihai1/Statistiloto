@@ -46,18 +46,18 @@ export class LotteryApi {
    .map(this.extractData)
    .catch(this.handleError);
    }*/
-  private handleError(error: any) {
+  private handleError(error:any) {
     // In a real world app, you might use a remote logging infrastructure
     /*let errMsg:string;
-    if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    } else {
-      if(typeof(error) ==  "object")
-      errMsg = error.message ? error.message : error.toString();
-    }
-    console.error(errMsg);*/
+     if (error instanceof Response) {
+     const body = error.json() || '';
+     const err = body.error || JSON.stringify(body);
+     errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+     } else {
+     if(typeof(error) ==  "object")
+     errMsg = error.message ? error.message : error.toString();
+     }
+     console.error(errMsg);*/
     debugger;
     return Observable.throw(error);
   }
@@ -78,7 +78,11 @@ export class LotteryApi {
       from: this.startDate,
       to: this.endDate,
       strong: (strong == undefined || strong == 'strong') ? 0 : 1
-    }).map(this.extractData)
+    }).map((res)=> {
+      loader.dismiss();
+      debugger;
+      return this.extractData(res);
+    })
       .catch(this.handleError);
     /*.toPromise()
      .then(data=> {
