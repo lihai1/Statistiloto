@@ -9,6 +9,10 @@ export class AppSettings {
   API_ENDPOINT:string;
   API_COMPUTING:string;
   API_USER:string;
+  API_GERENRATE_FORMS:string;
+  API_GERENRATE_STATISTICS:string;
+  API_ANALYZE_NUMBERS:string;
+  calcStat:string = 'pares';
   constructor(platform:Platform) {
     platform.ready().then(() => {
       if (platform.is('core')) {
@@ -19,6 +23,10 @@ export class AppSettings {
       }
       this.API_COMPUTING = this.API_ENDPOINT+'generate/';
       this.API_USER = this.API_ENDPOINT+'user/';
+      this.API_GERENRATE_FORMS = 'form';
+      this.API_GERENRATE_STATISTICS = 'pares';
+      this.API_ANALYZE_NUMBERS = 'analyze';
+
     });
   }
 }

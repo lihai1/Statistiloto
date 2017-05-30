@@ -27,6 +27,7 @@ import {CloudSettings, CloudModule} from '@ionic/cloud-angular'
 import {CreateUserForm} from "../pages/create-user-form/create-form";
 import {AppSettings} from "../services/appSettings.service";
 import {Device} from "@ionic-native/device";
+import { UserForm} from "../services/userForm.service";
 
 const cloudSettings:CloudSettings = {
   'core': {
@@ -76,6 +77,7 @@ const cloudSettings:CloudSettings = {
     SplashScreen,
     AppTools,
     userData,
+    UserForm,
     AuthService,
     LotteryApi,
     AppSettings,

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {userData, numberData} from "../../services/user.service";
+import {AuthService, User} from "../../services/auth.service";
 
 
 @Component({
@@ -10,9 +11,9 @@ export class userFormsPage {
   forms:numberData[];
   numbers:numberData[];
   lucky:numberData[];
-  user:Object;
-  constructor(user:userData) {
-    this.user = user;
+  userData:User;
+  constructor(private user:userData,private auth: AuthService) {
+    this.userData = auth.getUser();
 
    /* user.getSavedForms().then(data =>{
       this.forms=data;
@@ -23,6 +24,7 @@ export class userFormsPage {
     this.lucky=user.getBuild();
     this.forms = user.getForms();
     this.numbers = user.getNumbers();
+    this.userData = this.auth.getUser();
   }
 
 

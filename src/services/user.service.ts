@@ -12,12 +12,14 @@ import {Device} from "@ionic-native/device";
 
 @Injectable()
 export class userData {
+  user:any;
   constructor(private platform:Platform, private http:Http,
               private loadingCtrl:LoadingController,
               private settings:AppSettings,
               private alertCtrl:AlertController,
               private device:Device/*, private nativeStorage:NativeStorage*/) {
     this.getFromStorage();
+
     /*storage.ready().then(() => {
 
      // set a key/value
@@ -179,75 +181,9 @@ export class userData {
     return res;
   }
 
-  private handleError(error:any) {
-    // In a real world app, you might use a remote logging infrastructure
-    /*let errMsg:string;
-     if (error instanceof Response) {
-     const body = error.json() || '';
-     const err = body.error || JSON.stringify(body);
-     errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-     } else {
-     if(typeof(error) ==  "object")
-     errMsg = error.message ? error.message : error.toString();
-     }
-     console.error(errMsg);*/
-    debugger;
-    return Observable.throw(error);
-  }
-
-  private extractData(res:Response | any) {
-    let body = res.json();
-    //debugger;
-    return body;//.data;
-  }
-
-  private badAlert() {
-    this.alertCtrl.create({
-      title: 'שגיאה',
-      subTitle: 'בעית חיבור לאינטרנט, אנא נסה שוב',//'your app is ready to reload with a new update',
-      buttons: [{
-        text: 'אשר'
-      }]
-    }).present();
-  }
-
-  private presentLoading() {
-    let loader = this.loadingCtrl.create({
-      content: "מחשב"//,
-      // duration: 3000
-    });
-    loader.present();
-    return loader;
-  }
-
-  //todo create user class
-  registerUser(user:any):Observable<any> {
-    var loader = this.presentLoading();
-    if(this.device.uuid)
-      user.uuid = this.device.uuid;
-    debugger;
-    return this.http.post(this.settings.API_USER + "add", user).map((res) => {
-      loader.dismiss();
-      debugger;
-      return this.extractData(res);
-    }).catch(err => {
-      loader.dismiss();
-      this.badAlert();
-      return this.handleError(err);
-    });
-    /*.toPromise()
-     .then(data=> {
-     loader.dismiss();
-     return data.json();
-     }).catch(err=> {
-     loader.dismiss();
-     this.badAlert();
-     return Promise.resolve([]);
-     });*/
-  }
 
 }
-var count_deb = 0;
+//var count_deb = 0;
 
 export class numberData {
   public numbers:number[] = [];
@@ -256,7 +192,7 @@ export class numberData {
   reqeustDate:Date;
 
   constructor(data:any) {
-    count_deb++;
+   // count_deb++;
     try {
       if (typeof data == 'object') {
         if (data.to != undefined) this.to = new Date(data.to);

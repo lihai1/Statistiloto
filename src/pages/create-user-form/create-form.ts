@@ -1,8 +1,9 @@
 
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NavController, AlertController, ViewController} from 'ionic-angular';
-import { AuthService } from '../../services/auth.service';
+import {AuthService, User} from '../../services/auth.service';
 import {userData} from "../../services/user.service";
+import {UserForm} from "../../services/userForm.service";
 
 @Component({
   selector: 'create-user-form',
@@ -10,16 +11,19 @@ import {userData} from "../../services/user.service";
 })
 export class CreateUserForm {
   createSuccess = false;
-  registerCredentials = {email: '', password: ''};
+  registerCredentials : User= {email: '', password: '',uuid:''};
 
   constructor(private nav: NavController,
               private viewCtrl:ViewController,
               private auth: AuthService,
               private alertCtrl: AlertController,
-              private userData:userData) {}
+              private userData:userData,
+              private userForm:UserForm) {
+    this.registerCredentials = userForm.getUser();
+  }
 
-  public login() {
-    this.userData.registerUser(this.registerCredentials).subscribe(success => {
+  public register() {
+    this.auth.registerUser(this.registerCredentials).subscribe(success => {
         if (success) {
           this.createSuccess = true;
           //this.showPopup("Success", "Account created.");
@@ -52,6 +56,7 @@ export class CreateUserForm {
 
 
   closePage() {
+    this.userForm.setUser(this.registerCredentials);
     this.viewCtrl.dismiss();
   }
 }

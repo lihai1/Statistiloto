@@ -1,7 +1,11 @@
+
 <ion-content padding>
   <ion-menu [content]="mycontent" side="{{side}}">
     <ion-content>
       <ion-list>
+        <button ion-button clear [ngStyle]="{'float':side=='right'?'left':'right'}" menuToggle icon-only>
+          <ion-icon name='menu'></ion-icon>
+        </button>
         <button *ngFor="let item of pages" ion-item menuToggle (click)="setPage(item.page)">
           {{item.text}}
         </button>
@@ -18,4 +22,3 @@
   </ion-menu>
   <ion-nav #mycontent [root]="rootPage"></ion-nav>
 </ion-content>
-
