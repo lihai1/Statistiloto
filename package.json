@@ -1,8 +1,15 @@
 {
-  "name": "dreamhouse",
   "version": "0.0.0",
-  "author": "Christophe Coenraets",
-  "homepage": "http://coenraets.org/",
+  "name": "ionic2-statistiloto",
+  "author": "Lihai akwa",
+  "homepage": "http://ionicframework.com/",
+  "description": "statistiloto2: An Ionic project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lihai1/Statistiloto/issues"
+  },
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -10,6 +17,11 @@
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lihai1/Statistiloto.git"
+  },
+
   "dependencies": {
     "@angular/common": "4.0.0",
     "@angular/compiler": "4.0.0",
@@ -53,6 +65,5 @@
       "version": "",
       "locator": "ios"
     }
-  ],
-  "description": "dreamhouse sample app"
+  ]
 }
