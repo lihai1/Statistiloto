@@ -1,6 +1,6 @@
 import {Injectable, Pipe} from '@angular/core';
-import {numberData} from "../services/user.service";
 import {AppTools} from "../services/appTools.service";
+import {SavedNumbers} from "../services/models/SavedNumbers";
 
 /*
  Generated class for the ArraysFilter pipe.
@@ -39,10 +39,10 @@ export class ArraysFilter {
 export class AnalyzedData {
   archiveSize:number;
   count:number;
-  numbers:numberData[] = [];
+  numbers:SavedNumbers[] = [];
   title: string = "";
   constructor(numbers:number[][],archiveSize:number,combos:number) {
-    numbers.forEach(item => this.numbers.push(new numberData(item)));
+    numbers.forEach(item => this.numbers.push(new SavedNumbers(item)));
     this.archiveSize = archiveSize;
     this.count=0;
     this.title = "שכיחות של ";

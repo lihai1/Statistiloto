@@ -4,6 +4,7 @@
 import {Component} from '@angular/core';
 import {userData} from "../../services/user.service";
 import {AppTools} from "../../services/appTools.service";
+import {UserNumbers} from "../../services/models/UserNumbers";
 @Component({
   selector: 'lottery-lucky',
   templateUrl: 'lottery-lucky.html',
@@ -27,9 +28,10 @@ export class LotteryLucky {
     this.willBe=[];
   }
   addNumber(n:number) {
-    if(this.willBe.length > 12){
+    var limit = 8;
+    if(this.willBe.length > limit){
         var options={
-          message: "לא ניתן להוסיף יותר מ12 מספרי מזל לטופס - מגבלה של טופס שיטטי",
+          message: "לא ניתן להוסיף יותר מ"+limit+" מספרי מזל לטופס - מגבלה של טופס שיטטי",
           duration: 2000,
           position: "bottom",
           showCloseButton:true,
@@ -37,21 +39,23 @@ export class LotteryLucky {
         };
       this.appTools.showToast(options);
     }
-    this.willBe.push(n);
-    this.choices.splice(this.choices.indexOf(n),1);
-    this.willBe = this.willBe.sort((a, b)=>a - b);
+    else {
+      this.willBe.push(n);
+      this.choices.splice(this.choices.indexOf(n), 1);
+      this.willBe = this.willBe.sort((a, b)=> a - b);
+    }
     // this.formsChange(null);
   }
 
   addArray(n:number) {
-    this.user.addToBuild(this.user.convert([this.willBe]));
+    this.user.addToBuild([new UserNumbers(this.willBe)]);
     this.initChoices();
   }
 
   removeNumber(i:number) {
     this.choices.push(this.willBe[i]);
     this.willBe.splice(i, 1);
-    this.choices.sort((a,b)=>a-b);
+    this.choices.sort((a,b)=> a - b);
 
     // this.formsChange(null);
   }

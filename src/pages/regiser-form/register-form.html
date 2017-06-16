@@ -42,7 +42,7 @@
       </ion-row>
 
     </form>
-    <button ion-button class="register-btn" block clear (click)="createAccount()">Create New Account</button>
+    <button ion-button class="register-btn" block clear (onLogin)="setPage($event)" (click)="createAccount()">Create New Account</button>
 
   </div>
 </ion-content>

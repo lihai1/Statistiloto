@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { HomePage } from '../home/home';
 import { StatsPage } from '../stats/stats';
 import { LuckPage } from '../luck/luck';
+import {IonicPage} from "ionic-angular/index";
+
 
 @Component({
   templateUrl: 'tabs.html'

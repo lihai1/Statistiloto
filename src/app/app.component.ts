@@ -18,7 +18,7 @@ export class MyApp {
       StatusBar.styleDefault();
       Splashscreen.hide();
 
-      if (!platform.is('core')) {
+      /*if (!platform.is('core')) {
         // This will only print when running on desktop
         console.log("I'm a regular browser!");
         deploy.channel = 'dev';
@@ -46,7 +46,7 @@ export class MyApp {
           }
 
         });
-      }
+      }*/
     });
   }
 }

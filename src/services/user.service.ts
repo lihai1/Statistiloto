@@ -7,19 +7,37 @@ import 'rxjs/operator/map'
 import 'rxjs/add/operator/toPromise';
 import {Platform, LoadingController, AlertController} from "ionic-angular/index";
 import {Observable} from "rxjs/Rx";
-import {AppSettings} from "./appSettings.service";
+import {AppSettings, NumbersCategory} from "./appSettings.service";
 import {Device} from "@ionic-native/device";
+import {AuthService} from "./auth.service";
+import {LotteryApi} from "./lottery.service";
+import {SavedNumbers} from "./models/SavedNumbers";
+import {UserNumbers} from "./models/UserNumbers";
 
 @Injectable()
 export class userData {
   user:any;
-  constructor(private platform:Platform, private http:Http,
+
+  constructor(private auth:AuthService,
+              private lottery:LotteryApi,
+              private platform:Platform,
+              private http:Http,
               private loadingCtrl:LoadingController,
               private settings:AppSettings,
               private alertCtrl:AlertController,
-              private device:Device/*, private nativeStorage:NativeStorage*/) {
+              private device:Device/*, private storage:Storage*/) {
     this.getFromStorage();
 
+    /*storage.ready().then(() => {
+      // set a key/value
+      storage.set('age', 'Max1');
+
+      // Or to get a key/value pair
+      storage.get('age').then((val) => {
+        alert(val);
+        console.log('Your age is', val);
+      });
+    });*/
     /*storage.ready().then(() => {
 
      // set a key/value
@@ -42,7 +60,7 @@ export class userData {
   }
 
   /*
-   private addToStorage(type:string,record:numberData){
+   private addToStorage(type:string,record:SavedNumbers){
    this.storage.get('type').then(data=>{
    if(data){
    this.storage.set(type,data.push(record));
@@ -70,60 +88,87 @@ export class userData {
      });*/
   }
 
-  private saveItem(type:string, data:numberData[]) {
+  private saveItem(type:string, data:UserNumbers[]) {
     //this.nativeStorage.setItem(type, JSON.stringify(data));
   }
 
-  private forms:numberData[] = [];
-  private numbers:numberData[] = [];
-  private build:numberData[] = [];
+  private forms:UserNumbers[] = [];
+  private numbers:UserNumbers[] = [];
+  private build:UserNumbers[] = [];
 
-  private baseUrl:string = 'https://protected-wildwood-80803.herokuapp.com/myresource/';
-  private getAll:string = 'getAll';
 
-  getSavedForms():Promise<any> {
-    return this.http.get(this.baseUrl + this.getAll).toPromise()
-      .then(data=> {
+  getSavedNumbers():Observable<any> {
+    return this.http.post(this.settings.API_USER_SAVE, this.auth.getUser())
+      .map(data=> {
         return data.json();
-      }).catch(err=> {
-        return Promise.resolve(this.forms);
       });
   }
 
-  getSavedNumbers():Promise<any> {
-    return Promise.resolve(this.numbers);
-  }
-
-  getNumbers():numberData[] {
+  getNumbers():UserNumbers[] {
     return this.numbers;
   }
 
-  getForms():numberData[] {
+  getForms():UserNumbers[] {
     return this.forms;
   }
+/*
+  private saveToServer(category:string,lucky:UserNumbers[]) {
+    if (this.auth.getUser()) {
+      return this.http.post(this.settings.API_USER_SAVE, {
+        userId: this.auth.getUser().id,
+        numbersId: category==NumbersCategory.API_USER_LUCKY?null:lucky[0].id,
+        willBe: category==NumbersCategory.API_USER_LUCKY?lucky[0].numbers.numbers:this.lottery.willBe,
+        category:category
+      }).subscribe(data=> {
+        console.log(data.json());
+      });
+    }
+  }*/
 
-  addSetData(lucky:numberData[]) {
-    // var tmp;
-    // for(let i = 0;i<lucky.length;i++) {
-    //  this.numbers.push(tmp = new numberData(lucky[i]));
+  private saveToServer(category:string,lucky:UserNumbers[]) {
+    if (this.auth.getUser()) {
+      lucky[0].id=this.auth.getUser().id;
+      return this.http.post(this.settings.API_USER_SAVE, lucky[0]).subscribe(data=> {
+        console.log(data.json());
+      });
+    }
+  }
+
+  addSetData(lucky:UserNumbers[]) {
     this.addAData(this.numbers, lucky);
-    this.saveItem('group', this.numbers);
-    // }
+    this.saveItem(NumbersCategory.API_USER_GROUP, this.numbers);
+
   }
 
-
-  addFormData(lucky:numberData[]) {
+  addFormData(lucky:UserNumbers[]) {
     this.addAData(this.forms, lucky);
-    this.saveItem('forms', this.numbers);
+    this.saveItem(NumbersCategory.API_USER_FORM, this.numbers);
+   // this.saveToServer(NumbersCategory.API_USER_FORM,lucky);
   }
 
-  addToBuild(nums:numberData[]) {
+  addToBuild(nums:UserNumbers[]) {
     this.addAData(this.build, nums);
-    this.saveItem('lucky', this.numbers);
+    this.saveItem(NumbersCategory.API_USER_LUCKY, this.numbers);
+  }
+
+
+  addToBuildSync(param:UserNumbers[]) {
+    this.addSetData(param);
+    this.saveToServer(null,param);
+  }
+
+  addSetDataSync(param:UserNumbers[]) {
+    this.addSetData(param);
+    this.saveToServer(null,param);
+  }
+
+  addFormDataSync(param:UserNumbers[]) {
+    this.addSetData(param);
+    this.saveToServer(null,param);
 
   }
 
-  getBuild():numberData[] {
+  getBuild():UserNumbers[] {
     return this.build;
   }
 
@@ -131,113 +176,91 @@ export class userData {
     this.build = [];
   }
 
-  private addAData(origin:numberData[], lucky:numberData[]) {
+  private addAData(origin:UserNumbers[], lucky:UserNumbers[]) {
     // debugger;
     if (!origin.length) {
       for (var i = 0; i < lucky.length; i++)
         origin.push(lucky[i]);
       return;
     }
-    var bad = false;
+    var duplicateCount = 0;
     for (var i = 0; i < lucky.length; i++) {
       var j = 0;
-      if (lucky[i].numbers.length == origin[j].numbers.length) {
-        for (j = 0; j < origin.length; j++) {
-          var k = 0;
-          for (k = 0; k < origin[j].numbers.length; k++) {
-            if (lucky[i].numbers[k] != origin[j][k]) {
-              break;
-            }
+      for (j = 0; j < origin.length; j++) {
+          if (lucky[i].id == origin[j].id) {
+            break;
           }
-          if (k == origin[j].numbers.length) {
-            bad = true;
-          }
-        }
       }
-      if (!bad) {
+
+      if (j==origin.length) {
         origin.push(lucky[i]);
       }
-      else bad = false;
+      else duplicateCount++;
+    }
+    if(duplicateCount>0){
+      console.log('found duplicates:'+duplicateCount+' total');
     }
   }
 
+  private addAData1(origin:SavedNumbers[], lucky:SavedNumbers[]) {
+  // debugger;
+  if (!origin.length) {
+    for (var i = 0; i < lucky.length; i++)
+      origin.push(lucky[i]);
+    return;
+  }
+  var bad = false;
+  for (var i = 0; i < lucky.length; i++) {
+    var j = 0;
+    if (lucky[i].numbers.length == origin[j].numbers.length) {
+      for (j = 0; j < origin.length; j++) {
+        var k = 0;
+        for (k = 0; k < origin[j].numbers.length; k++) {
+          if (lucky[i].numbers[k] != origin[j][k]) {
+            break;
+          }
+        }
+        if (k == origin[j].numbers.length) {
+          bad = true;
+        }
+      }
+    }
+    if (!bad) {
+      origin.push(lucky[i]);
+    }
+    else bad = false;
+  }
+}
 
-  convert(data:number[][]):numberData[] {
+
+
+  convert(category:string,data:number[][]):UserNumbers[] {
     var result = [];
-
-    for (var i = 0; i < data.length && i < 15; i++)
-      result.push(new numberData(data[i]));
+    for (var i = 0; i < data.length; i++)
+      result.push(new UserNumbers({category:category,data:data[i]}));
     return result;
   }
-
+  convertSaved(data:SavedNumbers[]) {
+    var result = [];
+    for (var i = 0; i < data.length; i++) {
+      result.push(new UserNumbers(data[i]));
+    }
+    return result;
+  }
   getAllNumbers() {
-    var res:numberData[] = this.build.concat([]);
+    var res:UserNumbers[] = this.build.concat([]);
     var tmp;
     for (var i = 0; i < this.numbers.length; i++) {
-      tmp = this.numbers[i].numbers.concat([]);
+      tmp = this.numbers[i].numbers.numbers.concat([]);
       tmp.pop();
-      res = res.concat(new numberData(tmp));
+      res = res.concat(new UserNumbers(tmp));
     }
     return res;
   }
 
 
 }
-//var count_deb = 0;
-
-export class numberData {
-  public numbers:number[] = [];
-  from:Date;
-  to:Date;
-  reqeustDate:Date;
-
-  constructor(data:any) {
-   // count_deb++;
-    try {
-      if (typeof data == 'object') {
-        if (data.to != undefined) this.to = new Date(data.to);
-        if (data.from != undefined) this.from = new Date(data.from);
-        if (data.reqeustDate != undefined) this.from = new Date(data.reqeustDate);
-        else this.reqeustDate = new Date();
-        this.numbers = data;
-      }
-      // if (count_deb > 1000)
-      // debugger;
-      console.log('numberData.. initialized!!');
-      // this.http=http;
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
-
-  isEmpty():boolean {
-    return this.numbers.length == 0;
-  }
 
 
-}
 
 
-// WEBPACK FOOTER //
-// ./src/services/user.service.ts
-
-
-// WEBPACK FOOTER //
-// ./src/services/user.service.ts
-
-
-// WEBPACK FOOTER //
-// ./src/services/user.service.ts
-
-
-// WEBPACK FOOTER //
-// ./src/services/user.service.ts
-
-
-// WEBPACK FOOTER //
-// ./src/services/user.service.ts
-
-
-// WEBPACK FOOTER //
-// ./src/services/user.service.ts

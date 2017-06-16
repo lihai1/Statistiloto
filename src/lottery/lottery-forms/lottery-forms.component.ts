@@ -2,16 +2,18 @@
  * Created by LihaiMac on 2/28/17.
  */
 import {Component, ElementRef} from '@angular/core';
-import {userData, numberData} from "../../services/user.service";
+import {userData} from "../../services/user.service";
 import {LotteryApi} from "../../services/lottery.service";
 import {AppTools} from "../../services/appTools.service";
+import {SavedNumbers} from "../../services/models/SavedNumbers";
+import {UserNumbers} from "../../services/models/UserNumbers";
 @Component({
   selector: 'lottery-forms',
   templateUrl: 'lottery-forms.html',
 })
 export class LotteryForms {
   formType:number = 6;
-  formsRes:numberData[] = [];
+  formsRes:SavedNumbers[] = [];
   choices:number[] = [6, 7, 8, 9, 10, 11, 12];
   willBe:number[] = [];
 
@@ -43,7 +45,7 @@ export class LotteryForms {
 
   animationState:string;
   generateNewForms(type1, howMany) {
-    var x:numberData[] = this.user.getAllNumbers();
+    var x:UserNumbers[] = this.user.getAllNumbers();
     //var willBe:number[] = [];
     var promise:Promise<number[]>;
     if (x.length > 0) {
@@ -55,13 +57,14 @@ export class LotteryForms {
     else {
       promise = Promise.resolve([]);
     }
-    
+
     promise.then(resolve => {
       this.lotteryApi.getNewForms(type1, howMany, resolve).subscribe(data => {
         console.log('generated forms!!');
         console.log(data);
-        //debugger;
-        this.formsRes = this.user.convert(data);
+        debugger;
+        //this.formsRes = this.user.convert(data);
+        this.formsRes = this.user.convertSaved(data);
         this.animationState = "";
         //setTimeout(()=>{
          // var list = document.querySelectorAll(".cover");

@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
-import {NavController, AlertController, ModalController} from 'ionic-angular';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {NavController, AlertController, ModalController, Events} from 'ionic-angular';
 import {AuthService, User} from '../../services/auth.service';
 import {CreateUserForm} from "../create-user-form/create-form";
 import {UserForm} from "../../services/userForm.service";
+import {userFormsPage} from "../user/numbers";
 
 @Component({
   selector: 'page-register-form',
@@ -10,12 +11,13 @@ import {UserForm} from "../../services/userForm.service";
 })
 export class RegisterPage {
   createSuccess = false;
-  registerCredentials : User= {email: '', password: '',uuid:''};
-
+  registerCredentials : User= new User('','','');
+  @Output() onLogin: EventEmitter<any> = new EventEmitter<any>();
   constructor(private modalCtrl:ModalController,
               private userForm:UserForm,
               private nav:NavController,
               private auth:AuthService,
+              public events: Events,
               private alertCtrl:AlertController) {
     this.registerCredentials = userForm.getUser();
   }
@@ -24,6 +26,11 @@ export class RegisterPage {
     this.auth.login(this.registerCredentials).subscribe(success => {
         if (success) {
           this.createSuccess = true;
+   //       debugger;
+
+          console.log('User created!')
+          this.events.publish('user:created', userFormsPage);
+          //this.onLogin.emit(userFormsPage);
         //  this.showPopup("Success", "Account created.");
         } else {
       //    this.showPopup("Error", "Problem creating account.");

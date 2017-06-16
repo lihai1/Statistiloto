@@ -4,9 +4,10 @@
 import {Component} from '@angular/core';
 
 import {NavController} from 'ionic-angular';
-import {numberData, userData} from "../../services/user.service";
+import {userData} from "../../services/user.service";
 import {LotteryApi} from "../../services/lottery.service";
 import {AppTools} from "../../services/appTools.service";
+import {UserNumbers} from "../../services/models/UserNumbers";
 
 @Component({
   selector: 'lottery-pares',
@@ -15,7 +16,7 @@ import {AppTools} from "../../services/appTools.service";
 export class LotteryPares {
   pares:number = 1;
   choices:number[] = [1, 2, 3, 4, 5, 6];
-  paresRes:numberData[] = [];
+  paresRes:UserNumbers[] = [];
   strong:string = 'strong';
 
   constructor(public navCtrl:NavController,
@@ -43,7 +44,8 @@ export class LotteryPares {
     this.lotteryApi.getNewPares(type_, howMany, this.strong).subscribe(data => {
       console.log('calculated stats!!');
       console.log(data);
-      this.paresRes = this.user.convert(data);
+      debugger;
+      this.paresRes = this.user.convertSaved(data);
     });
   }
 

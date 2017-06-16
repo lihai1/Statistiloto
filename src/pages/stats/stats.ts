@@ -4,6 +4,7 @@ import {NavController} from 'ionic-angular';
 import {LotteryApi} from "../../services/lottery.service";
 import {userData} from "../../services/user.service";
 
+
 @Component({
   selector: 'page-stats',
   templateUrl: 'stats.html',

@@ -4,6 +4,7 @@
 import {ActionSheetController, ToastController} from 'ionic-angular';
 
 import {Injectable} from '@angular/core'
+import {UserNumbers} from "./models/UserNumbers";
 
 @Injectable()
 export class AppTools {
@@ -33,15 +34,16 @@ export class AppTools {
     actionSheet.present();
   }
 
-  setArrayButtonsJson(arr:any[], itemText:string, callback:Function,resolve:Function):any[] {
+  setArrayButtonsJson(arr:UserNumbers[], itemText:string, callback:Function,resolve:Function):any[] {
     let buttons = [];
     let pre = itemText ? itemText : '';
-    arr.forEach((elem)=> {
+    arr.forEach((elem:UserNumbers,index,arr)=> {
       var tmp:string = '';
-      if(elem.numbers) elem=elem.numbers;
-      elem.forEach((num)=>tmp+=' '+num);
+      //if(elem.numbers) elem=elem.numbers;
+      elem.numbers.numbers.forEach((num)=>tmp+=' '+num);
       buttons.push({
-        text: pre + " " + tmp,
+        text: pre+' '+tmp,
+       // icon:'<lottery-list [data]="[form]" [disabled]="true"></lottery-list>',
         handler: ()=> {
           resolve(callback(elem));
         }
@@ -94,5 +96,9 @@ export class AppTools {
     if(this.factorialMem[n])
       return this.factorialMem[n];
     return this.factorialMem[n] = n==1?1:n*this.factorial(n-1);
+  }
+
+  static normalizeDate(date:string):Date{
+    return new Date(date.replace('IDT','').replace('IST',''));
   }
 }

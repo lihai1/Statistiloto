@@ -5,22 +5,25 @@ import {AlertController, LoadingController} from "ionic-angular";
 import {Http} from "@angular/http";
 import {Device} from "@ionic-native/device";
 import {AppSettings} from "./appSettings.service";
-import {numberData} from "./user.service";
+import {SavedNumbers} from "./models/SavedNumbers";
+import {UserNumbers} from "./models/UserNumbers";
 
 export class User {
   email:string;
   password:string;
   uuid:string;
+  numbers:Array<UserNumbers>;
 
-  constructor(email:string, password:string) {
+  constructor(email:string, password:string,uid:string) {
     this.email = email;
     this.password = password;
+    this.uuid = uid;
   }
 }
 
 @Injectable()
 export class AuthService {
-  currentUser:User;
+  currentUser:any;
 
   constructor(private settings:AppSettings,
               private device:Device,
@@ -82,13 +85,11 @@ export class AuthService {
    });
    }
    }*/
-
-login(user:User):Observable<any> {
-  debugger;
+login(user:User):Observable<User> {
     var loader = this.presentLoading();
     if (this.device.uuid)
       user.uuid = this.device.uuid;
-
+    else user.uuid = "12";
     return this.http.post(this.settings.API_USER + "get", user).map((res) => {
       loader.dismiss();
       debugger;
@@ -116,10 +117,10 @@ login(user:User):Observable<any> {
     });
   }
 
-  saveUserNumbers(nums:numberData[]):Observable<any> {
+  saveUserNumbers(nums:SavedNumbers):Observable<any> {
     var loader = this.presentLoading();
-    
-    return this.http.post(this.settings.API_USER + "add", nums).map((res) => {
+
+    return this.http.post(this.settings.API_USER_SAVE, nums).map((res) => {
       loader.dismiss();
       debugger;
       return this.extractData(res);
@@ -130,7 +131,7 @@ login(user:User):Observable<any> {
     });
   }
 
-  getUser():User {
+  getUser():any {
     return this.currentUser;
   }
 

@@ -1,18 +1,19 @@
 /**
  * Created by LihaiMac on 3/5/17.
  */
-import {Component, ElementRef, Renderer} from '@angular/core';
+import {Component, ElementRef, Renderer2} from '@angular/core';
 import {MenuController} from 'ionic-angular';
 import {TabsPage} from '../pages/tabs/tabs'
 import {userFormsPage} from '../pages/user/numbers'
 import {RegisterPage} from '../pages/regiser-form/regiser-form'
 import {LotteryApi} from '../services/lottery.service';
 import {AppTools} from '../services/appTools.service';
-
+import { Events } from 'ionic-angular';
 
 @Component({
   selector: 'my-menu',
-  templateUrl: 'menu.component.html'
+  templateUrl: 'menu.component.html'//,
+  //directives: [RegisterPage]
 })
 export class MenuPage{
 
@@ -40,7 +41,12 @@ export class MenuPage{
     return this.end;
   }
   side:string;
-  constructor(public app:AppTools,public menuCtrl:MenuController, public lottery:LotteryApi,public el: ElementRef, public renderer: Renderer) {
+  constructor(public app:AppTools,
+              public menuCtrl:MenuController,
+              public lottery:LotteryApi,
+              public el: ElementRef,
+              public events: Events,
+              public renderer: Renderer2) {
     menuCtrl.enable(true);
     this.rootPage = userFormsPage;
     var tmp:Date=new Date();
@@ -54,10 +60,16 @@ export class MenuPage{
     this.endDate = new Date().toISOString();
     if(app.language == 'heb'){
       this.side = 'right';
-      renderer.setElementStyle(el.nativeElement, 'direction', 'rtl');
+      renderer.setStyle(el.nativeElement, 'direction', 'rtl');
     }
     else
       this.side = 'left';
+
+    events.subscribe('user:created', (page) => {
+      // user and time are the same arguments passed in `events.publish(user, time)`
+      this.setPage(page);
+    });
+
   }
   setPage(page) {
     this.rootPage = page;

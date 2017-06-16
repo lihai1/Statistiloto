@@ -28,6 +28,8 @@ import {CreateUserForm} from "../pages/create-user-form/create-form";
 import {AppSettings} from "../services/appSettings.service";
 import {Device} from "@ionic-native/device";
 import { UserForm} from "../services/userForm.service";
+import { NumbersCategoryPipe } from '../pipes/numbers-category/numbers-category';
+import {IonicStorageModule} from "@ionic/storage/es5/index";
 
 const cloudSettings:CloudSettings = {
   'core': {
@@ -51,13 +53,15 @@ const cloudSettings:CloudSettings = {
     RegisterPage,
     CreateUserForm,
     AnalyzedFormPage,
-    MenuPage
+    MenuPage,
+    NumbersCategoryPipe
   ],
   imports: [
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-    CloudModule.forRoot(cloudSettings)
+    CloudModule.forRoot(cloudSettings),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -82,6 +86,7 @@ const cloudSettings:CloudSettings = {
     LotteryApi,
     AppSettings,
     Device,
+   // Storage,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

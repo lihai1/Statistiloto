@@ -17,14 +17,14 @@ export class LotteryApi {
   constructor(platform:Platform, private http:Http,
               private loadingCtrl:LoadingController,
               private settings:AppSettings,
-              private alertCtrl:AlertController,) {
+              private alertCtrl:AlertController) {
     console.log('lottery Api.. initialized!!');
 
   }
 
   startDate:Date;
   endDate:Date;
-
+  willBe:number[];
   setStartDate(date:Date) {
     this.startDate = date;
   }
@@ -56,8 +56,8 @@ export class LotteryApi {
 
   getNewForms(type_:number, howMany:number, willBe:number[], strong?:string):Observable<any> {
     var loader = this.presentLoading();
-
-    return this.http.post(this.settings.API_COMPUTING + "forms", {
+  this.willBe = willBe;
+    return this.http.post(this.settings.API_GERENRATE_FORMS, {
       willBe: willBe != undefined ? willBe : [],
       howMany: howMany,
       type: type_,
@@ -66,7 +66,6 @@ export class LotteryApi {
       strong: (strong == undefined || strong == 'strong') ? 0 : 1
     }).map((res)=> {
       loader.dismiss();
-      debugger;
       return this.extractData(res);
     })
       .catch(this.handleError);
@@ -74,7 +73,7 @@ export class LotteryApi {
 
   getNewPares(type:number, howMany:number, strong?:string):Observable<any> {
     var loader = this.presentLoading();
-    return this.http.post(this.settings.API_COMPUTING + "pares", {
+    return this.http.post(this.settings.API_GERENRATE_STATISTICS, {
       howMany: howMany,
       type: type,
       from: this.startDate,
@@ -105,8 +104,8 @@ export class LotteryApi {
 
   private presentLoading() {
     let loader = this.loadingCtrl.create({
-      content: "מחשב",
-      duration: 3000
+      content: "מחשב"//,
+     // duration: 3000
     });
     loader.present();
     return loader;

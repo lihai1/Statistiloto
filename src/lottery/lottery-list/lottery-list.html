@@ -3,7 +3,7 @@
     <ion-item>
       <!-- <ion-badge class="ball" *ngFor="let num of item.numbers; let i=index;" item-right>{{num}}</ion-badge>
        -->
-      <span class="cover" [ngClass]="lastBallClass" *ngFor="let num of item.numbers">
+      <span class="cover" [ngClass]="lastBallClass" *ngFor="let num of item.numbers.numbers">
         <span class="ball">
           <span>{{num}}</span>
         </span>
@@ -26,6 +26,8 @@
       </button>
     </ion-item-options>
   </ion-item-sliding>
+
+
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="needInfinite" threshold="30%">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"

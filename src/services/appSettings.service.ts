@@ -12,7 +12,9 @@ export class AppSettings {
   API_GERENRATE_FORMS:string;
   API_GERENRATE_STATISTICS:string;
   API_ANALYZE_NUMBERS:string;
-  calcStat:string = 'pares';
+  API_USER_SAVE:string;
+  API_USER_GET_NUMBERS;
+
   constructor(platform:Platform) {
     platform.ready().then(() => {
       if (platform.is('core')) {
@@ -23,10 +25,28 @@ export class AppSettings {
       }
       this.API_COMPUTING = this.API_ENDPOINT+'generate/';
       this.API_USER = this.API_ENDPOINT+'user/';
-      this.API_GERENRATE_FORMS = 'form';
-      this.API_GERENRATE_STATISTICS = 'pares';
-      this.API_ANALYZE_NUMBERS = 'analyze';
+      this.API_GERENRATE_FORMS = this.API_COMPUTING+'form';
+      this.API_GERENRATE_STATISTICS = this.API_COMPUTING+'pares';
+      this.API_ANALYZE_NUMBERS = this.API_COMPUTING+'analyze';
+      this.API_USER_GET_NUMBERS = this.API_USER+'getUserNumbers';
+      this.API_USER_SAVE = this.API_USER+'addUserNumbers';
 
     });
+  }
+}
+
+export class NumbersCategory {
+  static API_USER_LUCKY:string = "luck";
+  static API_USER_FORM:string = "user-generated";
+  static API_USER_GROUP:string = "group-calculated";
+
+  static getCategories():string[]{
+    var rs=[];
+    for(var e in NumbersCategory){
+        rs.push(NumbersCategory[e]);
+    }
+    // remove method preperty
+    rs.shift();
+    return rs;
   }
 }
