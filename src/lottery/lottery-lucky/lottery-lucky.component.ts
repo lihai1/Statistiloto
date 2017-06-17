@@ -48,7 +48,7 @@ export class LotteryLucky {
   }
 
   addArray(n:number) {
-    this.user.addToBuild([new UserNumbers(this.willBe)]);
+    this.user.addToBuildSync([new UserNumbers(this.willBe)]);
     this.initChoices();
   }
 

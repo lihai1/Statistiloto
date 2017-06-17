@@ -54,7 +54,14 @@ export class LotteryApi {
     return body;//.data;
   }
 
-  getNewForms(type_:number, howMany:number, willBe:number[], strong?:string):Observable<any> {
+  getNewForms(type_:number, howMany:number, willBe:any, strong?:string):Observable<any> {
+    debugger;
+    try{
+      willBe = willBe.numbers.numbers;
+    }
+    catch(e){
+
+    }
     var loader = this.presentLoading();
   this.willBe = willBe;
     return this.http.post(this.settings.API_GERENRATE_FORMS, {

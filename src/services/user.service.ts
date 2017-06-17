@@ -13,11 +13,12 @@ import {AuthService} from "./auth.service";
 import {LotteryApi} from "./lottery.service";
 import {SavedNumbers} from "./models/SavedNumbers";
 import {UserNumbers} from "./models/UserNumbers";
+import { Storage } from '@ionic/storage';
+import {UserStorage} from "./userStorage.service";
 
 @Injectable()
 export class userData {
   user:any;
-
   constructor(private auth:AuthService,
               private lottery:LotteryApi,
               private platform:Platform,
@@ -25,40 +26,15 @@ export class userData {
               private loadingCtrl:LoadingController,
               private settings:AppSettings,
               private alertCtrl:AlertController,
-              private device:Device/*, private storage:Storage*/) {
+              private device:Device, private storage:Storage,private userStorage:UserStorage) {
     this.getFromStorage();
+    //setTimeout(()=>{
+    //  this.userStorage=UserStorage.getIstance();
+   // },3000);
 
-    /*storage.ready().then(() => {
-      // set a key/value
-      storage.set('age', 'Max1');
-
-      // Or to get a key/value pair
-      storage.get('age').then((val) => {
-        alert(val);
-        console.log('Your age is', val);
-      });
-    });*/
-    /*storage.ready().then(() => {
-
-     // set a key/value
-     // this.storage.set('name', 'Max');
-
-     // Or to get a key/value pair
-     storage.get('lucky').then((val) => {
-     debugger;
-     this.build = val;
-     });
-     storage.get('forms').then((val) => {
-     this.forms = val;
-     });
-     storage.get('group').then((val) => {
-     this.numbers = val;
-     });
-     });*/
     console.log('userData.. initialized!!');
-    // this.http=http;
   }
-
+  //userStorage:UserStorage;
   /*
    private addToStorage(type:string,record:SavedNumbers){
    this.storage.get('type').then(data=>{
@@ -67,25 +43,58 @@ export class userData {
    }
    });
    }*/
-  private getFromStorage() {
-    /* this.platform.ready().then(() => {
+  addAFormToStorage(toAdd:string, userNums:UserNumbers){
+    if(this.user) {
+      this.storage.get(this.user.email + ":" + toAdd).then((data) => {
+        if (!data)
+          data = [];
+        data.push(userNums);
+        this.storage.set(this.user.email + ":" + toAdd,data);
+      });
+    }
+  }
+  addForm(userNums:UserNumbers){
+    this.addAFormToStorage(UserStorage.FORM,userNums);
+  }
+  addGroup(userNums:UserNumbers){
+    this.addAFormToStorage(UserStorage.GROUP,userNums);
+  }
+  addLucky(userNums:UserNumbers){
+    this.addAFormToStorage(UserStorage.LUCKY,userNums);
+  }
+  public getFromStorage() {
+    this.userStorage.getFromStorage().subscribe(user => {
+      this.user = {};
+      //debugger;
+      if(user) {
+        this.user =user;
+        this.platform.ready().then(() => {
 
-     this.nativeStorage.getItem('group')
-     .then(
-     data => this.numbers = data,
-     error => console.log('group' + error)
-     );
-     this.nativeStorage.getItem('lucky')
-     .then(
-     data => this.build = data,
-     error => console.log('lucky' + error)
-     );
-     this.nativeStorage.getItem('forms')
-     .then(
-     data => this.forms = data,
-     error => console.log('forms' + error)
-     );
-     });*/
+          this.storage.ready().then(() => {
+
+            this.storage.get(user.email + ":" + UserStorage.FORM).then((user) => {
+              if (user) {
+                this.addFormData(user);
+              }
+              else console.log('user storage: user not exist.');
+            });
+            this.storage.get(user.email + ":" + UserStorage.GROUP).then((user) => {
+              if (user) {
+                this.addSetData(user);
+              }
+              else console.log('user storage: user not exist.');
+            });
+            this.storage.get(user.email + ":" + UserStorage.LUCKY).then((user) => {
+              if (user) {
+                this.addToBuild(user);
+              }
+              else console.log('user storage: user not exist.');
+            });
+          });
+
+        });
+      }
+    }, error => console.log("error getting user from storage: "+JSON.stringify(error)));
   }
 
   private saveItem(type:string, data:UserNumbers[]) {
@@ -153,18 +162,23 @@ export class userData {
 
 
   addToBuildSync(param:UserNumbers[]) {
-    this.addSetData(param);
-    this.saveToServer(null,param);
+    this.addToBuild(param);
+    this.addLucky(param[0]);
+
+    //this.saveToServer(null,param);
   }
 
   addSetDataSync(param:UserNumbers[]) {
     this.addSetData(param);
-    this.saveToServer(null,param);
+    this.addGroup(param[0]);
+
+    //this.saveToServer(null,param);
   }
 
   addFormDataSync(param:UserNumbers[]) {
-    this.addSetData(param);
-    this.saveToServer(null,param);
+    this.addFormData(param);
+    this.addForm(param[0]);
+    //this.saveToServer(null,param);
 
   }
 
@@ -259,6 +273,11 @@ export class userData {
   }
 
 
+  clearData() {
+    this.build = [];
+    this.numbers = [];
+    this.forms = [];
+  }
 }
 
 

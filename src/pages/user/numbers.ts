@@ -33,9 +33,11 @@ export class userFormsPage {
       var nums:UserNumbers[] = this.userData.numbers;
       this.sortUserNumbers(nums);
     }
-    this.lucky=user.getBuild();
-    this.forms = user.getForms();
-    this.numbers = user.getNumbers();
+    setTimeout(()=>{
+      this.lucky=user.getBuild();
+      this.forms = user.getForms();
+      this.numbers = user.getNumbers();
+    },2000);
   }
 
   private sortUserNumbers(nums:UserNumbers[]){

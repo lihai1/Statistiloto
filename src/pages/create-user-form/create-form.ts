@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 import {NavController, AlertController, ViewController, Events} from 'ionic-angular';
 import {AuthService, User} from '../../services/auth.service';
 import {userData} from "../../services/user.service";
-import {UserForm} from "../../services/userForm.service";
+import {UserStorage} from "../../services/userStorage.service";
 import {userFormsPage} from "../user/numbers";
 
 
@@ -21,7 +21,7 @@ export class CreateUserForm {
               private alertCtrl: AlertController,
               private userData:userData,
               private events:Events,
-              private userForm:UserForm) {
+              private userForm:UserStorage) {
     this.registerCredentials = userForm.getUser();
   }
 

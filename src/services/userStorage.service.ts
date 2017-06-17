@@ -8,6 +8,8 @@ import { Storage } from '@ionic/storage';
 import {Platform} from "ionic-angular/index";
 import {UserNumbers} from "./models/UserNumbers";
 import {User} from "./auth.service";
+import {userData} from "./user.service";
+import {Observable} from "rxjs/Rx";
 
 
 @Injectable()
@@ -17,11 +19,16 @@ export class UserStorage {
   private forms:UserNumbers[] = [];
   private numbers:UserNumbers[] = [];
   private build:UserNumbers[] = [];
-
+  private static obj;
 
   constructor(private storage:Storage, private platform:Platform) {
-    this.user = new User('', '', 'no uuid at init');
+    this.setUser(new User('', '', 'no uuid at init'));
     this.getFromStorage();
+    UserStorage.obj = this;
+  }
+
+  static getIstance(){
+    return UserStorage.obj;
   }
 
   //todo create user class
@@ -37,57 +44,28 @@ export class UserStorage {
   public static FORM = "form";
   public static GROUP = "group";
   public static LUCKY = "lucky";
-  addAForm(toAdd){
-    if(this.user.email != "") {
-      this.storage.get(this.user.email + ":" + toAdd).then((user) => {
-        if (user) {
-          this.user = user;
-        }
-        else console.log('user storage: user not exist.');
-      });
-    }
-  }
-  addForm(){
-    this.addAForm(UserStorage.FORM);
-  }
-  addGroup(){
-    this.addAForm(UserStorage.GROUP);
-  }
-  addLucky(){
-    this.addAForm(UserStorage.LUCKY);
-  }
-  
-  
-  private getFromStorage() {
-    this.platform.ready().then(() => {
 
-      this.storage.ready().then(() => {
 
-        this.storage.get('user').then((user) => {
-          if (user) {
-            this.user = user;
-          }
-          else console.log('user storage: user not exist.');
-        });
-        this.storage.get(this.user.email + ":"+UserStorage.FORM).then((user) => {
-          if (user) {
-            this.user = user;
-          }
-          else console.log('user storage: user not exist.');
-        });
-        this.storage.get(this.user.email + ":"+UserStorage.GROUP).then((user) => {
-          if (user) {
-            this.user = user;
-          }
-          else console.log('user storage: user not exist.');
-        });
-        this.storage.get(this.user.email + ":"+UserStorage.LUCKY).then((user) => {
-          if (user) {
-            this.user = user;
-          }
-          else console.log('user storage: user not exist.');
+
+  public getFromStorage():Observable<User> {
+    //var promise = Pr
+    return new Observable(observer => {
+      this.platform.ready().then(() => {
+
+        this.storage.ready().then(() => {
+
+          this.storage.get('user').then((user) => {
+            //debugger;
+            if (user) {
+              this.user = user;
+            }
+            else console.log('user storage: user not exist.');
+            observer.next(user);
+            observer.complete();
+          });
         });
       });
     });
   }
 }
+

@@ -44,7 +44,7 @@ export class LotteryPares {
     this.lotteryApi.getNewPares(type_, howMany, this.strong).subscribe(data => {
       console.log('calculated stats!!');
       console.log(data);
-      debugger;
+      //debugger;
       this.paresRes = this.user.convertSaved(data);
     });
   }

@@ -2,8 +2,11 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {NavController, AlertController, ModalController, Events} from 'ionic-angular';
 import {AuthService, User} from '../../services/auth.service';
 import {CreateUserForm} from "../create-user-form/create-form";
-import {UserForm} from "../../services/userForm.service";
+import {UserStorage} from "../../services/userStorage.service";
 import {userFormsPage} from "../user/numbers";
+import {Storage} from '@ionic/storage';
+import {userData} from "../../services/user.service";
+
 
 @Component({
   selector: 'page-register-form',
@@ -11,14 +14,17 @@ import {userFormsPage} from "../user/numbers";
 })
 export class RegisterPage {
   createSuccess = false;
-  registerCredentials : User= new User('','','');
-  @Output() onLogin: EventEmitter<any> = new EventEmitter<any>();
+  registerCredentials:User = new User('', '', '');
+  @Output() onLogin:EventEmitter<any> = new EventEmitter<any>();
+
   constructor(private modalCtrl:ModalController,
-              private userForm:UserForm,
+              private userForm:UserStorage,
               private nav:NavController,
               private auth:AuthService,
-              public events: Events,
-              private alertCtrl:AlertController) {
+              public events:Events,
+              private alertCtrl:AlertController,
+              private storage:Storage,
+              private userData:userData) {
     this.registerCredentials = userForm.getUser();
   }
 
@@ -26,14 +32,15 @@ export class RegisterPage {
     this.auth.login(this.registerCredentials).subscribe(success => {
         if (success) {
           this.createSuccess = true;
-   //       debugger;
+          this.userForm.setUser(this.registerCredentials);
+          //       debugger;
 
-          console.log('User created!')
+          console.log('User created!');
           this.events.publish('user:created', userFormsPage);
           //this.onLogin.emit(userFormsPage);
-        //  this.showPopup("Success", "Account created.");
+          //  this.showPopup("Success", "Account created.");
         } else {
-      //    this.showPopup("Error", "Problem creating account.");
+          //    this.showPopup("Error", "Problem creating account.");
         }
       },
       error => {
@@ -43,6 +50,7 @@ export class RegisterPage {
 
   public createAccount() {
     this.userForm.setUser(this.registerCredentials);
+    this.userData.getFromStorage();
     let modal = this.modalCtrl.create(CreateUserForm);
     modal.present();
   }
@@ -64,4 +72,18 @@ export class RegisterPage {
     });
     alert.present();
   }
+
+  private setUserStorage() {
+
+    this.storage.ready().then(() => {
+
+      this.storage.get('user').then((user) => {
+        console.log('Me: Hey, ' + name + '! You have a very nice name.');
+        console.log('You: Thanks! I got it for my birthday.');
+      });
+    });
+
+  }
+
+
 }

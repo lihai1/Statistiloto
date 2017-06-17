@@ -62,7 +62,7 @@ export class LotteryForms {
       this.lotteryApi.getNewForms(type1, howMany, resolve).subscribe(data => {
         console.log('generated forms!!');
         console.log(data);
-        debugger;
+        //debugger;
         //this.formsRes = this.user.convert(data);
         this.formsRes = this.user.convertSaved(data);
         this.animationState = "";
