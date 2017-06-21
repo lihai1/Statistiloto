@@ -1,0 +1,45 @@
+lottery-list {
+  ion-item-sliding {
+    direction: ltr;
+  }
+  ion-label {
+    white-space: initial;
+    line-height: 22px;
+  }
+
+}
+
+.above-tabs > .toast-wrapper.toast-bottom {
+  bottom: 7vh;
+}
+
+span.ball {
+
+  margin-top: 5px;
+  background-color: red;
+  border-radius: 50%;
+  width: 1.7em;
+  height: 1.7em;
+  display: inline-flex;
+  margin-right: 5px;
+
+}
+
+span.ball > span{
+  text-align: center;
+  width: 100%;
+  margin:auto;
+
+}
+.cover{
+  font-size:15px;
+}
+.last-ball .cover:last-child span.ball{
+  background-color: #0d81ff;
+  font-size:17px;
+
+}
+.last-ball .cover.regular-ball:last-child span.ball{
+  background-color: red ;
+  font-size:15px;
+}

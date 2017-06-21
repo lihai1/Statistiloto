@@ -30,6 +30,7 @@ import {Device} from "@ionic-native/device";
 import { UserStorage} from "../services/userStorage.service";
 import { NumbersCategoryPipe } from '../pipes/numbers-category/numbers-category';
 import { IonicStorageModule } from '@ionic/storage';
+import {LotteryData} from "../lottery/lottery-data/lottery-data.component";
 
 const cloudSettings:CloudSettings = {
   'core': {
@@ -50,6 +51,7 @@ const cloudSettings:CloudSettings = {
     LotteryPares,
     LotteryForms,
     LotteryLucky,
+    LotteryData,
     RegisterPage,
     CreateUserForm,
     AnalyzedFormPage,

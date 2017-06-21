@@ -7,7 +7,6 @@ import {ToastController, ItemSliding, ModalController, InfiniteScroll} from 'ion
 import {AppTools} from "../../services/appTools.service";
 import {userData} from "../../services/user.service";
 import {AnalyzedFormPage} from "../../pages/analyzed-form/analyzed-form";
-import {SavedNumbers} from "../../services/models/SavedNumbers";
 import {UserNumbers} from "../../services/models/UserNumbers";
 
 @Component({
@@ -78,7 +77,7 @@ export class LotteryList {
   }
 
   addToService(item:UserNumbers, slidingItem:ItemSliding) { //todo
-    //debugger;
+    debugger;
     this.app.showToast("bottom", 'הטופס נוסף למספרי המזל');
     if (this.recordType == 'form')
       this.user.addFormDataSync([item]);

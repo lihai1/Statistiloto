@@ -26,8 +26,10 @@ export class userData {
               private loadingCtrl:LoadingController,
               private settings:AppSettings,
               private alertCtrl:AlertController,
-              private device:Device, private storage:Storage,private userStorage:UserStorage) {
-    this.getFromStorage();
+              private device:Device,
+              private storage:Storage,
+              private userStorage:UserStorage) {
+    //this.getFromStorage();
     //setTimeout(()=>{
     //  this.userStorage=UserStorage.getIstance();
    // },3000);
